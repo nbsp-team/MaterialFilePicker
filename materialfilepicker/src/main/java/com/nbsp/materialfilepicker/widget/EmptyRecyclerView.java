@@ -45,7 +45,7 @@ public class EmptyRecyclerView extends RecyclerView {
         }
     }
 
-    public void setmEmptyView(@Nullable View mEmptyView) {
+    public void setEmptyView(@Nullable View mEmptyView) {
         this.mEmptyView = mEmptyView;
         checkIfEmpty();
     }

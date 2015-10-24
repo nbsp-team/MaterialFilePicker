@@ -25,6 +25,7 @@ public class DirectoryFragment extends Fragment {
 
     private static final String ARG_FILE_PATH = "arg_file_path";
 
+    private View mEmptyView;
     private String mPath;
     private EmptyRecyclerView mDirectoryRecyclerView;
     private DirectoryAdapter mDirectoryAdapter;
@@ -58,6 +59,7 @@ public class DirectoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_directory, container, false);
         mDirectoryRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.directory_recycler_view);
+        mEmptyView = view.findViewById(R.id.directory_empty_view);
         return view;
     }
 
@@ -82,6 +84,7 @@ public class DirectoryFragment extends Fragment {
 
         mDirectoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDirectoryRecyclerView.setAdapter(mDirectoryAdapter);
+        mDirectoryRecyclerView.setEmptyView(mEmptyView);
     }
 
     private void initArgs() {

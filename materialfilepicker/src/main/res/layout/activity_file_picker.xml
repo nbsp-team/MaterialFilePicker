@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ActionBarTheme"
+            android:theme="?mfp_toolbar_theme"
             />
 
     </android.support.design.widget.AppBarLayout>

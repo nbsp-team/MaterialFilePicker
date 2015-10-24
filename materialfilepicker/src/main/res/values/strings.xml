@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MaterialFilePicker</string>
     <string name="catalog">Каталог</string>
+    <string name="empty_directory_hint">Файлов нет</string>
 </resources>

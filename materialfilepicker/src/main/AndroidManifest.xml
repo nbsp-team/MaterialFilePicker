@@ -7,7 +7,7 @@
         android:supportsRtl="true">
 
         <activity android:name=".ui.FilePickerActivity"
-            android:theme="@style/MainTheme">
+            android:theme="@style/MFP_BaseTheme">
         </activity>
     </application>
 </manifest>

@@ -1,7 +1,9 @@
 package com.nbsp.materialfilepicker.ui;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,8 +16,11 @@ import java.io.File;
 /**
  * Created by Dimorinny on 24.10.15.
  */
-public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener{
+public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener {
+    private static final String ARG_CURRENT_PATH = "arg_title_state";
+    public static final String RESULT_FILE_PATH = "result_file_path";
     private static final String START_PATH = "/";
+    private static final int HANDLE_CLICK_DELAY = 150;
 
     private Toolbar mToolbar;
     private String mCurrentPath = START_PATH;
@@ -25,9 +30,14 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_picker);
 
+        if (savedInstanceState != null) {
+            mCurrentPath = savedInstanceState.getString(ARG_CURRENT_PATH);
+        } else {
+            initFragment();
+        }
+
         initViews();
         initToolbar();
-        initFragment();
     }
 
     private void initToolbar() {
@@ -80,18 +90,41 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
             updateTitle();
         } else {
+            setResult(RESULT_CANCELED);
             super.onBackPressed();
         }
     }
 
     @Override
-    public void onFileClicked(File clickedFile) {
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ARG_CURRENT_PATH, mCurrentPath);
+    }
+
+    @Override
+    public void onFileClicked(final File clickedFile) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handleFileClicked(clickedFile);
+            }
+        }, HANDLE_CLICK_DELAY);
+    }
+
+    private void handleFileClicked(final File clickedFile) {
         if (clickedFile.isDirectory()) {
+            addFragmentToBackStack(clickedFile.getPath());
             mCurrentPath = clickedFile.getPath();
             updateTitle();
-            addFragmentToBackStack(clickedFile.getPath());
         } else {
-            // TODO: return result
+            setResultAndFinish(clickedFile.getPath());
         }
+    }
+
+    private void setResultAndFinish(String filePath) {
+        Intent data = new Intent();
+        data.putExtra(RESULT_FILE_PATH, filePath);
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

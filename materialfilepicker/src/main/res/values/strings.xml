@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MaterialFilePicker</string>
+    <string name="catalog">Каталог</string>
 </resources>

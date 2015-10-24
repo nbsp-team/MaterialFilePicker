@@ -6,6 +6,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <activity android:name=".ui.FilePickerActivity"
+            android:theme="@style/MainTheme">
+        </activity>
     </application>
-
 </manifest>

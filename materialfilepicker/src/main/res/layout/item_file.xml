@@ -24,13 +24,13 @@
             android:singleLine="true"
             android:textSize="18sp"
             android:textColor="@color/item_file_title_color"
-            android:text="Directory"/>
+            />
 
         <TextView
             android:id="@+id/item_file_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Папка"/>
+            />
 
     </LinearLayout>
 

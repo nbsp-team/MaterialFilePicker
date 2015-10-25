@@ -10,7 +10,6 @@ import java.util.List;
  * Created by Dimorinny on 24.10.15.
  */
 public class FileUtils {
-
     public static List<File> getFileListByDirPath(String path) {
         File directory = new File(path);
         List<File> resultFiles = new ArrayList<>();

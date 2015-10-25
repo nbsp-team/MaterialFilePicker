@@ -1,7 +1,6 @@
 package com.nbsp.materialfilepicker.ui;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nbsp.materialfilepicker.R;
-import com.nbsp.materialfilepicker.utils.FileUtils;
+import com.nbsp.materialfilepicker.utils.FileTypeUtils;
 
 import java.io.File;
 import java.util.List;
@@ -71,10 +70,9 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.Dire
     public void onBindViewHolder(DirectoryViewHolder holder, int position) {
         File currentFile = mFiles.get(position);
 
-        holder.mFileImage.setImageDrawable(ContextCompat.getDrawable(mContext,
-                currentFile.isDirectory() ? R.drawable.ic_folder_gray_48dp : R.drawable.ic_file_gray_48dp));
-        holder.mFileSubtitle.setText(
-                currentFile.isDirectory() ? mContext.getString(R.string.catalog) : FileUtils.getReadableFileSize(currentFile.length()));
+        FileTypeUtils.FileType fileType = FileTypeUtils.getFileType(currentFile);
+        holder.mFileImage.setImageResource(fileType.getIcon());
+        holder.mFileSubtitle.setText(fileType.getDescription());
         holder.mFileTite.setText(currentFile.getName());
     }
 

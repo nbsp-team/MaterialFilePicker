@@ -7,12 +7,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.nbsp.materialfilepicker.R;
 import com.nbsp.materialfilepicker.utils.FileUtils;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 /**
  * Created by Dimorinny on 24.10.15.
@@ -44,9 +47,19 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void initToolbar() {
         setSupportActionBar(mToolbar);
 
+        // Show back button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        // Truncate start of toolbar title
+        try {
+            Field f = mToolbar.getClass().getDeclaredField("mTitleTextView");
+            f.setAccessible(true);
+
+            TextView textView = (TextView) f.get(mToolbar);
+            textView.setEllipsize(TextUtils.TruncateAt.START);
+        } catch (Exception ignored) {}
 
         updateTitle();
     }

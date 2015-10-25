@@ -3,6 +3,7 @@ package com.nbsp.materialfilepicker.ui;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,7 @@ import java.io.File;
 public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener {
     private static final String ARG_CURRENT_PATH = "arg_title_state";
     public static final String RESULT_FILE_PATH = "result_file_path";
-    private static final String START_PATH = "/";
+    private static final String START_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
     private static final int HANDLE_CLICK_DELAY = 150;
 
     private Toolbar mToolbar;
@@ -62,7 +63,11 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void updateTitle() {
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(mCurrentPath.isEmpty() ? "/" : mCurrentPath);
+            String title = mCurrentPath.isEmpty() ? "/" : mCurrentPath;
+            if (title.startsWith(START_PATH)) {
+                title = title.replaceFirst(START_PATH, getString(R.string.start_path_name));
+            }
+            getSupportActionBar().setTitle(title);
         }
     }
 

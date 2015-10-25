@@ -1,8 +1,5 @@
 package com.nbsp.materialfilepicker.widget;
 
-/**
- * Created by Dimorinny on 24.10.15.
- */
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;

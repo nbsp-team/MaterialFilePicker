@@ -92,6 +92,4 @@ public class DirectoryFragment extends Fragment {
             mPath = getArguments().getString(ARG_FILE_PATH);
         }
     }
-
-
 }

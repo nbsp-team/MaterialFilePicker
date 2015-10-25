@@ -1,1 +1,1 @@
-include ':app', ':materialfilepicker'
+include ':app', ':library'

@@ -5,6 +5,14 @@ Material file picker library for Android
 
 ## Using
 
+Add dependency in application module gradle file:
+
+```gradle
+dependencies {
+    compile 'com.nbsp:library:1.0'
+}
+```
+
 Open file picker:
 
 ```java

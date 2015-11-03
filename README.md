@@ -9,7 +9,7 @@ Add dependency in application module gradle file:
 
 ```gradle
 dependencies {
-    compile 'com.nbsp:library:1.0'
+    compile 'com.nbsp:library:1.01'
 }
 ```
 

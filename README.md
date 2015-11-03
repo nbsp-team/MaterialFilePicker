@@ -1,7 +1,7 @@
 # Material File Picker
 Material file picker library for Android
 
-![](https://i.imgur.com/ibcVjpm.png)
+![](https://i.imgur.com/mjxs05n.png)
 
 ## Using
 

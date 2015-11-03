@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
     gitUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
 
-    libraryVersion = '1.0'
+    libraryVersion = '1.01'
 
     developerId = 'lukaville'
     developerName = 'Nickolay Chameev'
@@ -31,8 +31,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.01"
     }
     buildTypes {
         release {

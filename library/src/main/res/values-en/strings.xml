@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MaterialFilePicker</string>
+    <string name="empty_directory_hint">Empty directory</string>
+    <string name="start_path_name">Device</string>
+    <string name="type_archive">Archive</string>
+    <string name="type_certificate">Certificate</string>
+    <string name="type_directory">Directory</string>
+    <string name="type_document">File</string>
+    <string name="type_drawing">Picture</string>
+    <string name="type_excel">Spreadsheet</string>
+    <string name="type_image">Image</string>
+    <string name="type_music">Music</string>
+    <string name="type_pdf">PDF document</string>
+    <string name="type_power_point">Presentation</string>
+    <string name="type_word">Document</string>
+</resources>

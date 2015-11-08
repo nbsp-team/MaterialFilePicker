@@ -5,9 +5,15 @@ Material file picker library for Android
 
 ## Using
 
-Add dependency in application module gradle file:
+Add repository url and dependency in application module gradle file:
 
 ```gradle
+repositories {
+    maven {
+        url  "http://dl.bintray.com/lukaville/maven" 
+    }
+}
+
 dependencies {
     compile 'com.nbsp:library:1.01'
 }

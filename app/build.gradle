@@ -19,9 +19,15 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "http://dl.bintray.com/lukaville/maven"
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile project(':library')
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.nbsp:library:1.01'
 }

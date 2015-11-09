@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'material-file-picker'
+    bintrayName = 'library'
 
     publishedGroupId = 'com.nbsp'
     libraryName = 'Material File Picker'
-    artifact = 'material-file-picker'
+    artifact = 'library'
 
     libraryDescription = 'File picker library in material design'
 

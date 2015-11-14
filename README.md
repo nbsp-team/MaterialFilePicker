@@ -22,7 +22,7 @@ dependencies {
 Open file picker:
 
 ```java
-Intent intent = new Intent(this, com.nbsp.materialfilepicker.ui.FilePickerActivity.class);
+Intent intent = new Intent(this, FilePickerActivity.class);
 startActivityForResult(intent, 1);
 ```
 

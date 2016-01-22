@@ -26,7 +26,7 @@ Intent intent = new Intent(this, FilePickerActivity.class);
 startActivityForResult(intent, 1);
 ```
 
-Ovveride on activity result:
+Override on activity result:
 
 ```java
 @Override

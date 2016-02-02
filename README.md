@@ -15,18 +15,18 @@ repositories {
 }
 
 dependencies {
-    compile 'com.nbsp:library:1.01'
+    compile 'com.nbsp:library:1.02'
 }
 ```
 
 Open file picker:
 
 ```java
-Intent intent = new Intent(this, com.nbsp.materialfilepicker.ui.FilePickerActivity.class);
+Intent intent = new Intent(this, FilePickerActivity.class);
 startActivityForResult(intent, 1);
 ```
 
-Ovveride on activity result:
+Override on activity result:
 
 ```java
 @Override

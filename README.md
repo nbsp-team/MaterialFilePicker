@@ -22,7 +22,18 @@ dependencies {
 Open file picker:
 
 ```java
+new MaterialFilePicker()
+    .withActivity(this)
+    .withRequestCode(1)
+    .withFilter(Pattern.compile(".*\\.txt$")) // Filtering files and directories by file name using regexp
+    .withFilterDirectories(true) // Set directories filterable (false by default)
+    .start();
+```
+or
+```java
 Intent intent = new Intent(this, FilePickerActivity.class);
+intent.putExtra(FilePickerActivity.ARG_FILE_FILTER, Pattern.compile(".*\\.txt$"));
+intent.putExtra(FilePickerActivity.ARG_DIRECTORIES_FILTER, true);
 startActivityForResult(intent, 1);
 ```
 

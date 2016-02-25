@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         new MaterialFilePicker()
                 .withActivity(this)
                 .withRequestCode(1)
-                .withFilterDirectories(true)
+                .withFilterDirectories(false)
                 .withFilter(Pattern.compile(".*\\.txt$"))
                 .start();
     }

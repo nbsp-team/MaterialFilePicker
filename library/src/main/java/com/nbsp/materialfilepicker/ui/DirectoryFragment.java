@@ -14,6 +14,7 @@ import com.nbsp.materialfilepicker.utils.FileUtils;
 import com.nbsp.materialfilepicker.widget.EmptyRecyclerView;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 /**
  * Created by Dimorinny on 24.10.15.
@@ -24,9 +25,15 @@ public class DirectoryFragment extends Fragment {
     }
 
     private static final String ARG_FILE_PATH = "arg_file_path";
+    private static final String ARG_FILE_FILTER = "arg_regexp_file_filter";
+    private static final String ARG_DIRECTORIES_FILTER = "arg_directories_filter";
 
     private View mEmptyView;
     private String mPath;
+
+    @Nullable private Pattern mFileFilter;
+    private boolean mDirectoryFilter;
+
     private EmptyRecyclerView mDirectoryRecyclerView;
     private DirectoryAdapter mDirectoryAdapter;
     private FileClickListener mFileClickListener;
@@ -44,11 +51,13 @@ public class DirectoryFragment extends Fragment {
         mFileClickListener = null;
     }
 
-    public static DirectoryFragment getInstance(String path) {
+    public static DirectoryFragment getInstance(String path, @Nullable Pattern filter, boolean directoriesFilter) {
         DirectoryFragment instance = new DirectoryFragment();
 
         Bundle args = new Bundle();
         args.putString(ARG_FILE_PATH, path);
+        args.putSerializable(ARG_FILE_FILTER, filter);
+        args.putBoolean(ARG_DIRECTORIES_FILTER, directoriesFilter);
         instance.setArguments(args);
 
         return instance;
@@ -71,7 +80,7 @@ public class DirectoryFragment extends Fragment {
     }
 
     private void initFilesList() {
-        mDirectoryAdapter = new DirectoryAdapter(getActivity(), FileUtils.getFileListByDirPath(mPath));
+        mDirectoryAdapter = new DirectoryAdapter(getActivity(), FileUtils.getFileListByDirPath(mPath, mFileFilter, mDirectoryFilter));
 
         mDirectoryAdapter.setOnItemClickListener(new DirectoryAdapter.OnItemClickListener() {
             @Override
@@ -91,5 +100,7 @@ public class DirectoryFragment extends Fragment {
         if (getArguments().getString(ARG_FILE_PATH) != null) {
             mPath = getArguments().getString(ARG_FILE_PATH);
         }
+        mDirectoryFilter = getArguments().getBoolean(ARG_DIRECTORIES_FILTER);
+        mFileFilter = (Pattern) getArguments().getSerializable(ARG_FILE_FILTER);
     }
 }

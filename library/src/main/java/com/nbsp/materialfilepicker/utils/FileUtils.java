@@ -1,27 +1,39 @@
 package com.nbsp.materialfilepicker.utils;
 
+import android.support.annotation.Nullable;
+
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Dimorinny on 24.10.15.
  */
 public class FileUtils {
-    public static List<File> getFileListByDirPath(String path) {
+    public static List<File> getFileListByDirPath(String path,
+                                                  @Nullable Pattern fileFilter,
+                                                  boolean directoriesFilter) {
         File directory = new File(path);
         List<File> resultFiles = new ArrayList<>();
 
-        // TODO: filter here
         File[] files = directory.listFiles();
-        if(files != null && files.length > 0) {
-            for(File f : files) {
-                if(f.isHidden()) {
+        if (files != null && files.length > 0) {
+            for (File f : files) {
+                if (f.isHidden()) {
                     continue;
                 }
-                resultFiles.add(f);
+
+                if (f.isDirectory() && !directoriesFilter) {
+                    resultFiles.add(f);
+                    continue;
+                }
+
+                if (fileFilter != null && fileFilter.matcher(f.getName()).matches()) {
+                    resultFiles.add(f);
+                }
             }
 
             Collections.sort(resultFiles, new FileComparator());

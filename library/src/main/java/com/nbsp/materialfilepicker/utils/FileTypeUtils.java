@@ -73,7 +73,7 @@ public class FileTypeUtils {
         return FileType.DOCUMENT;
     }
 
-    private static String getExtension(String fileName) {
+    public static String getExtension(String fileName) {
         String encoded;
         try { encoded = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20"); }
         catch(UnsupportedEncodingException e) { encoded = fileName; }

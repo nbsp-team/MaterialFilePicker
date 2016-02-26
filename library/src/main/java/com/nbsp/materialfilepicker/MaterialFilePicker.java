@@ -15,6 +15,8 @@ public class MaterialFilePicker {
     private Integer mRequestCode;
     private Pattern mFileFilter;
     private Boolean mDirectoriesFilter = false;
+    private String mRootPath;
+    private String mCurrentPath;
 
     public MaterialFilePicker() {}
 
@@ -38,6 +40,16 @@ public class MaterialFilePicker {
         return this;
     }
 
+    public MaterialFilePicker withRootPath(String rootPath) {
+        mRootPath = rootPath;
+        return this;
+    }
+
+    public MaterialFilePicker withPath(String path) {
+        mCurrentPath = path;
+        return this;
+    }
+
     public void start() {
         if (mActivity == null) {
             throw new RuntimeException("You must pass activity by calling withActivity method");
@@ -52,6 +64,14 @@ public class MaterialFilePicker {
 
         if (mFileFilter != null) {
             intent.putExtra(FilePickerActivity.ARG_FILE_FILTER, mFileFilter);
+        }
+
+        if (mRootPath != null) {
+            intent.putExtra(FilePickerActivity.ARG_START_PATH, mRootPath);
+        }
+
+        if (mCurrentPath != null) {
+            intent.putExtra(FilePickerActivity.ARG_CURRENT_PATH, mCurrentPath);
         }
 
         mActivity.startActivityForResult(intent, mRequestCode);

@@ -24,13 +24,18 @@ import java.util.regex.Pattern;
 public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener {
     public static final String ARG_FILE_FILTER = "arg_file_filter";
     public static final String ARG_DIRECTORIES_FILTER = "arg_directories_filter";
-    private static final String ARG_CURRENT_PATH = "arg_title_state";
+    public static final String ARG_START_PATH = "arg_start_path";
+    public static final String ARG_CURRENT_PATH = "arg_current_path";
+
+    public static final String STATE_START_PATH = "state_start_path";
+    private static final String STATE_CURRENT_PATH = "state_current_path";
+
     public static final String RESULT_FILE_PATH = "result_file_path";
-    private static final String START_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
     private static final int HANDLE_CLICK_DELAY = 150;
 
     private Toolbar mToolbar;
-    private String mCurrentPath = START_PATH;
+    private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private String mCurrentPath = mStartPath;
 
     private Pattern mFileFilter;
     private boolean mDirectoriesFilter;
@@ -45,7 +50,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         initToolbar();
 
         if (savedInstanceState != null) {
-            mCurrentPath = savedInstanceState.getString(ARG_CURRENT_PATH);
+            mStartPath = savedInstanceState.getString(STATE_START_PATH);
+            mCurrentPath = savedInstanceState.getString(STATE_CURRENT_PATH);
         } else {
             initFragment();
         }
@@ -58,6 +64,19 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
         if (getIntent().hasExtra(ARG_FILE_FILTER)) {
             mFileFilter = (Pattern) getIntent().getSerializableExtra(ARG_FILE_FILTER);
+        }
+
+        if (getIntent().hasExtra(ARG_START_PATH)) {
+            mStartPath = getIntent().getStringExtra(ARG_START_PATH);
+            mCurrentPath = mStartPath;
+        }
+
+        if (getIntent().hasExtra(ARG_CURRENT_PATH)) {
+            String currentPath = getIntent().getStringExtra(ARG_START_PATH);
+
+            if (currentPath.startsWith(mStartPath)) {
+                mCurrentPath = currentPath;
+            }
         }
     }
 
@@ -87,15 +106,15 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void initFragment() {
         getFragmentManager().beginTransaction()
-                .add(R.id.container, DirectoryFragment.getInstance(START_PATH, mFileFilter, mDirectoriesFilter))
+                .add(R.id.container, DirectoryFragment.getInstance(mStartPath, mFileFilter, mDirectoriesFilter))
                 .commit();
     }
 
     private void updateTitle() {
         if (getSupportActionBar() != null) {
             String title = mCurrentPath.isEmpty() ? "/" : mCurrentPath;
-            if (title.startsWith(START_PATH)) {
-                title = title.replaceFirst(START_PATH, getString(R.string.start_path_name));
+            if (title.startsWith(mStartPath)) {
+                title = title.replaceFirst(mStartPath, getString(R.string.start_path_name));
             }
             getSupportActionBar().setTitle(title);
         }
@@ -133,7 +152,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ARG_CURRENT_PATH, mCurrentPath);
+        outState.putString(STATE_CURRENT_PATH, mCurrentPath);
+        outState.putString(STATE_START_PATH, mStartPath);
     }
 
     @Override

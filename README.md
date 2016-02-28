@@ -27,6 +27,7 @@ new MaterialFilePicker()
     .withRequestCode(1)
     .withFilter(Pattern.compile(".*\\.txt$")) // Filtering files and directories by file name using regexp
     .withFilterDirectories(true) // Set directories filterable (false by default)
+    .withHiddenFiles(true) // Show hidden files and folders
     .start();
 ```
 or
@@ -34,6 +35,7 @@ or
 Intent intent = new Intent(this, FilePickerActivity.class);
 intent.putExtra(FilePickerActivity.ARG_FILE_FILTER, Pattern.compile(".*\\.txt$"));
 intent.putExtra(FilePickerActivity.ARG_DIRECTORIES_FILTER, true);
+intent.putExtra(FilePickerActivity.ARG_SHOW_HIDDEN, true);
 startActivityForResult(intent, 1);
 ```
 

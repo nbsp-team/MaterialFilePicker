@@ -15,7 +15,8 @@ import java.util.regex.Pattern;
 public class FileUtils {
     public static List<File> getFileListByDirPath(String path,
                                                   @Nullable Pattern fileFilter,
-                                                  boolean directoriesFilter) {
+                                                  boolean directoriesFilter,
+                                                  boolean showHidden) {
         File directory = new File(path);
         List<File> resultFiles = new ArrayList<>();
 
@@ -23,6 +24,9 @@ public class FileUtils {
         if (files != null && files.length > 0) {
             for (File f : files) {
                 if (f.isHidden()) {
+                    if (showHidden) {
+                        resultFiles.add(f);
+                    }
                     continue;
                 }
 

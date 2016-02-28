@@ -26,6 +26,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public static final String ARG_DIRECTORIES_FILTER = "arg_directories_filter";
     public static final String ARG_START_PATH = "arg_start_path";
     public static final String ARG_CURRENT_PATH = "arg_current_path";
+    public static final String ARG_SHOW_HIDDEN = "arg_show_hidden";
 
     public static final String STATE_START_PATH = "state_start_path";
     private static final String STATE_CURRENT_PATH = "state_current_path";
@@ -39,6 +40,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private Pattern mFileFilter;
     private boolean mDirectoriesFilter;
+
+    private boolean mShowHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
                 mCurrentPath = currentPath;
             }
         }
+
+        if (getIntent().hasExtra(ARG_SHOW_HIDDEN)) {
+            mShowHidden = getIntent().getBooleanExtra(ARG_SHOW_HIDDEN, false);
+        }
     }
 
     private void initToolbar() {
@@ -106,7 +113,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void initFragment() {
         getFragmentManager().beginTransaction()
-                .add(R.id.container, DirectoryFragment.getInstance(mStartPath, mFileFilter, mDirectoriesFilter))
+                .add(R.id.container, DirectoryFragment.getInstance(
+                        mStartPath, mFileFilter, mDirectoriesFilter, mShowHidden))
                 .commit();
     }
 
@@ -122,7 +130,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void addFragmentToBackStack(String path) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(path, mFileFilter, mDirectoriesFilter))
+                .replace(R.id.container, DirectoryFragment.getInstance(
+                        path, mFileFilter, mDirectoriesFilter, mShowHidden))
                 .addToBackStack(null)
                 .commit();
     }

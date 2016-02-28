@@ -17,6 +17,7 @@ public class MaterialFilePicker {
     private Boolean mDirectoriesFilter = false;
     private String mRootPath;
     private String mCurrentPath;
+    private Boolean mShowHidden = false;
 
     public MaterialFilePicker() {}
 
@@ -50,6 +51,11 @@ public class MaterialFilePicker {
         return this;
     }
 
+    public MaterialFilePicker withHiddenFiles(boolean show) {
+        mShowHidden = show;
+        return this;
+    }
+
     public void start() {
         if (mActivity == null) {
             throw new RuntimeException("You must pass activity by calling withActivity method");
@@ -73,6 +79,8 @@ public class MaterialFilePicker {
         if (mCurrentPath != null) {
             intent.putExtra(FilePickerActivity.ARG_CURRENT_PATH, mCurrentPath);
         }
+
+        intent.putExtra(FilePickerActivity.ARG_SHOW_HIDDEN, mShowHidden);
 
         mActivity.startActivityForResult(intent, mRequestCode);
     }

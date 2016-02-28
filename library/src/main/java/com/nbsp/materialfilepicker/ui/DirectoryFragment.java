@@ -27,12 +27,15 @@ public class DirectoryFragment extends Fragment {
     private static final String ARG_FILE_PATH = "arg_file_path";
     private static final String ARG_FILE_FILTER = "arg_regexp_file_filter";
     private static final String ARG_DIRECTORIES_FILTER = "arg_directories_filter";
+    private static final String ARG_SHOW_HIDDEN = "arg_show_hidden";
 
     private View mEmptyView;
     private String mPath;
 
     @Nullable private Pattern mFileFilter;
     private boolean mDirectoryFilter;
+
+    private boolean mShowHidden;
 
     private EmptyRecyclerView mDirectoryRecyclerView;
     private DirectoryAdapter mDirectoryAdapter;
@@ -51,13 +54,15 @@ public class DirectoryFragment extends Fragment {
         mFileClickListener = null;
     }
 
-    public static DirectoryFragment getInstance(String path, @Nullable Pattern filter, boolean directoriesFilter) {
+    public static DirectoryFragment getInstance(
+            String path, @Nullable Pattern filter, boolean directoriesFilter, boolean showHidden) {
         DirectoryFragment instance = new DirectoryFragment();
 
         Bundle args = new Bundle();
         args.putString(ARG_FILE_PATH, path);
         args.putSerializable(ARG_FILE_FILTER, filter);
         args.putBoolean(ARG_DIRECTORIES_FILTER, directoriesFilter);
+        args.putBoolean(ARG_SHOW_HIDDEN, showHidden);
         instance.setArguments(args);
 
         return instance;
@@ -80,7 +85,8 @@ public class DirectoryFragment extends Fragment {
     }
 
     private void initFilesList() {
-        mDirectoryAdapter = new DirectoryAdapter(getActivity(), FileUtils.getFileListByDirPath(mPath, mFileFilter, mDirectoryFilter));
+        mDirectoryAdapter = new DirectoryAdapter(getActivity(),
+                FileUtils.getFileListByDirPath(mPath, mFileFilter, mDirectoryFilter, mShowHidden));
 
         mDirectoryAdapter.setOnItemClickListener(new DirectoryAdapter.OnItemClickListener() {
             @Override
@@ -102,5 +108,6 @@ public class DirectoryFragment extends Fragment {
         }
         mDirectoryFilter = getArguments().getBoolean(ARG_DIRECTORIES_FILTER);
         mFileFilter = (Pattern) getArguments().getSerializable(ARG_FILE_FILTER);
+        mShowHidden = getArguments().getBoolean(ARG_SHOW_HIDDEN, false);
     }
 }

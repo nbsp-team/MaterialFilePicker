@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.nbsp:library:1.07'
+    compile 'com.nbsp:library:1.08'
 }
 ```
 

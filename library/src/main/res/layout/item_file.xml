@@ -3,6 +3,7 @@
     android:orientation="horizontal"
     android:background="@drawable/bg_clickable"
     android:clickable="true"
+    android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

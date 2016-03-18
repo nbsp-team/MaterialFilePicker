@@ -8,6 +8,7 @@
     <string name="type_excel">Таблица</string>
     <string name="type_image">Картинка</string>
     <string name="type_music">Аудиофайл</string>
+    <string name="type_video">Видео</string>
     <string name="type_pdf">Документ PDF</string>
     <string name="type_power_point">Презентация</string>
     <string name="type_word">Документ</string>

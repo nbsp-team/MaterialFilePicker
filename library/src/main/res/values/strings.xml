@@ -11,6 +11,7 @@
     <string name="type_excel">Spreadsheet</string>
     <string name="type_image">Image</string>
     <string name="type_music">Music</string>
+    <string name="type_video">Video</string>
     <string name="type_pdf">PDF document</string>
     <string name="type_power_point">Presentation</string>
     <string name="type_word">Document</string>

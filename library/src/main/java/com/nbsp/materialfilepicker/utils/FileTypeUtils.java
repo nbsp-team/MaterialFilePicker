@@ -23,10 +23,12 @@ public class FileTypeUtils {
         EXCEL(R.drawable.ic_excel_box, R.string.type_excel, "xls", "xlk", "xlsb", "xlsm", "xlsx", "xlr", "xltm", "xlw", "numbers", "ods", "ots"),
         IMAGE(R.drawable.ic_image_box, R.string.type_image, "bmp", "gif", "ico", "jpeg", "jpg", "pcx", "png", "psd", "tga", "tiff", "tif", "xcf"),
         MUSIC(R.drawable.ic_music_box, R.string.type_music, "aiff", "aif", "wav", "flac", "m4a", "wma", "amr", "mp2", "mp3", "wma", "aac", "mid", "m3u"),
+        VIDEO(R.drawable.ic_video_box, R.string.type_video, "avi", "mov", "wmv", "mkv", "3gp", "f4v", "flv", "mp4", "mpeg", "webm"),
         PDF(R.drawable.ic_pdf_box, R.string.type_pdf, "pdf"),
         POWER_POINT(R.drawable.ic_powerpoint_box, R.string.type_power_point, "pptx", "keynote", "ppt", "pps", "pot", "odp", "otp"),
         WORD(R.drawable.ic_word_box, R.string.type_word, "doc", "docm", "docx", "dot", "mcw", "rtf", "pages", "odt", "ott"),
-        ARCHIVE(R.drawable.ic_zip_box, R.string.type_archive, "cab", "7z", "alz", "arj", "bzip2", "bz2", "dmg", "gzip", "gz", "jar", "lz", "lzip", "lzma", "zip", "rar", "tar", "tgz");
+        ARCHIVE(R.drawable.ic_zip_box, R.string.type_archive, "cab", "7z", "alz", "arj", "bzip2", "bz2", "dmg", "gzip", "gz", "jar", "lz", "lzip", "lzma", "zip", "rar", "tar", "tgz"),
+        APK(R.drawable.ic_apk_box, R.string.type_apk, "apk");
 
         private int icon;
         private int description;
@@ -52,9 +54,10 @@ public class FileTypeUtils {
     }
 
     private static Map<String, FileType> fileTypeExtensions = new HashMap<>();
+
     static {
-        for(FileType fileType : FileType.values()) {
-            for(String extension : fileType.getExtensions()) {
+        for (FileType fileType : FileType.values()) {
+            for (String extension : fileType.getExtensions()) {
                 fileTypeExtensions.put(extension, fileType);
             }
         }
@@ -75,8 +78,11 @@ public class FileTypeUtils {
 
     public static String getExtension(String fileName) {
         String encoded;
-        try { encoded = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20"); }
-        catch(UnsupportedEncodingException e) { encoded = fileName; }
+        try {
+            encoded = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            encoded = fileName;
+        }
         return MimeTypeMap.getFileExtensionFromUrl(encoded).toLowerCase();
     }
 }

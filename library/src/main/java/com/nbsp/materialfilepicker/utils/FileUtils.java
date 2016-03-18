@@ -23,21 +23,23 @@ public class FileUtils {
         File[] files = directory.listFiles();
         if (files != null && files.length > 0) {
             for (File f : files) {
-                if (f.isHidden()) {
-                    if (showHidden) {
+
+                if (f.isDirectory() && !directoriesFilter) {
+                    if (!f.isHidden() || (f.isHidden() && showHidden)) {
                         resultFiles.add(f);
                     }
                     continue;
                 }
 
-                if (f.isDirectory() && !directoriesFilter) {
+                if (fileFilter != null) {
+                    if (fileFilter.matcher(f.getName()).matches())
+                        if (!f.isHidden() || (f.isHidden() && showHidden)) {
+                            resultFiles.add(f);
+                        }
+                } else {
                     resultFiles.add(f);
-                    continue;
                 }
 
-                if (fileFilter != null && fileFilter.matcher(f.getName()).matches()) {
-                    resultFiles.add(f);
-                }
             }
 
             Collections.sort(resultFiles, new FileComparator());

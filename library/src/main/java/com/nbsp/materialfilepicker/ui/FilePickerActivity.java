@@ -150,8 +150,12 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
-            mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
-            updateTitle();
+            if (!mCurrentPath.equals("")) {
+                mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
+                updateTitle();
+            } else {
+                // Do nothing
+            }
         } else {
             setResult(RESULT_CANCELED);
             super.onBackPressed();

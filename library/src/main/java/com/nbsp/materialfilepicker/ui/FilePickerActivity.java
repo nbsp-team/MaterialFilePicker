@@ -176,12 +176,16 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void handleFileClicked(final File clickedFile) {
-        if (clickedFile.isDirectory()) {
-            addFragmentToBackStack(clickedFile.getPath());
-            mCurrentPath = clickedFile.getPath();
-            updateTitle();
+        if (!isFinishing()) {
+            if (clickedFile.isDirectory()) {
+                addFragmentToBackStack(clickedFile.getPath());
+                mCurrentPath = clickedFile.getPath();
+                updateTitle();
+            } else {
+                setResultAndFinish(clickedFile.getPath());
+            }
         } else {
-            setResultAndFinish(clickedFile.getPath());
+            // Do nothing
         }
     }
 

@@ -12,21 +12,20 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.nbsp.materialfilepicker.R;
+import com.nbsp.materialfilepicker.filter.CompositeFilter;
 import com.nbsp.materialfilepicker.utils.FileUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.regex.Pattern;
 
 /**
  * Created by Dimorinny on 24.10.15.
  */
 public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener {
-    public static final String ARG_FILE_FILTER = "arg_file_filter";
-    public static final String ARG_DIRECTORIES_FILTER = "arg_directories_filter";
     public static final String ARG_START_PATH = "arg_start_path";
     public static final String ARG_CURRENT_PATH = "arg_current_path";
-    public static final String ARG_SHOW_HIDDEN = "arg_show_hidden";
+
+    public static final String ARG_FILTER = "arg_filter";
 
     public static final String STATE_START_PATH = "state_start_path";
     private static final String STATE_CURRENT_PATH = "state_current_path";
@@ -38,10 +37,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     private String mCurrentPath = mStartPath;
 
-    private Pattern mFileFilter;
-    private boolean mDirectoriesFilter;
-
-    private boolean mShowHidden;
+    private CompositeFilter mFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +56,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void initArguments() {
-        if (getIntent().hasExtra(ARG_DIRECTORIES_FILTER)) {
-            mDirectoriesFilter = getIntent().getBooleanExtra(ARG_DIRECTORIES_FILTER, false);
-        }
-
-        if (getIntent().hasExtra(ARG_FILE_FILTER)) {
-            mFileFilter = (Pattern) getIntent().getSerializableExtra(ARG_FILE_FILTER);
+        if (getIntent().hasExtra(ARG_FILTER)) {
+            mFilter = (CompositeFilter) getIntent().getSerializableExtra(ARG_FILTER);
         }
 
         if (getIntent().hasExtra(ARG_START_PATH)) {
@@ -80,10 +73,6 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             if (currentPath.startsWith(mStartPath)) {
                 mCurrentPath = currentPath;
             }
-        }
-
-        if (getIntent().hasExtra(ARG_SHOW_HIDDEN)) {
-            mShowHidden = getIntent().getBooleanExtra(ARG_SHOW_HIDDEN, false);
         }
     }
 
@@ -114,7 +103,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void initFragment() {
         getFragmentManager().beginTransaction()
                 .add(R.id.container, DirectoryFragment.getInstance(
-                        mStartPath, mFileFilter, mDirectoriesFilter, mShowHidden))
+                        mStartPath, mFilter))
                 .commit();
     }
 
@@ -131,7 +120,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void addFragmentToBackStack(String path) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, DirectoryFragment.getInstance(
-                        path, mFileFilter, mDirectoriesFilter, mShowHidden))
+                        path, mFilter))
                 .addToBackStack(null)
                 .commit();
     }

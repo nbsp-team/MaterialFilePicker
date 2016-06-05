@@ -3,6 +3,7 @@ package com.nbsp.materialfilepicker.utils;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,13 @@ import java.util.List;
 public class FileUtils {
     public static List<File> getFileListByDirPath(String path, FileFilter filter) {
         File directory = new File(path);
-        List<File> result = Arrays.asList(directory.listFiles(filter));
+        File[] files = directory.listFiles(filter);
+
+        if (files == null) {
+            return new ArrayList<>();
+        }
+
+        List<File> result = Arrays.asList(files);
         Collections.sort(result, new FileComparator());
         return result;
     }

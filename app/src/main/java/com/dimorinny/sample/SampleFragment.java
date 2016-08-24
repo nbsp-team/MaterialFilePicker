@@ -1,50 +1,62 @@
 package com.dimorinny.sample;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import java.util.regex.Pattern;
-
-public class MainActivity extends AppCompatActivity {
+public class SampleFragment extends Fragment {
 
     public static final int PERMISSIONS_REQUEST_CODE = 0;
     public static final int FILE_PICKER_REQUEST_CODE = 1;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        Button pickButton = (Button) findViewById(R.id.pick_from_activity);
+    public SampleFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_sample, container, false);
+
+        Button pickButton = (Button) view.findViewById(R.id.pick_from_fragment);
         pickButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 checkPermissionsAndOpenFilePicker();
             }
         });
+
+        return view;
     }
 
     private void checkPermissionsAndOpenFilePicker() {
         String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
 
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+        if (ContextCompat.checkSelfPermission(getContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permission)) {
                 showError();
             } else {
-                ActivityCompat.requestPermissions(this, new String[]{permission}, PERMISSIONS_REQUEST_CODE);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, PERMISSIONS_REQUEST_CODE);
             }
         } else {
             openFilePicker();
@@ -52,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showError() {
-        Toast.makeText(this, "Allow external storage reading", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Allow external storage reading", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -72,22 +84,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void openFilePicker() {
         new MaterialFilePicker()
-                .withActivity(this)
+                .withSupportFragment(this)
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .withHiddenFiles(true)
                 .start();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
 
             if (path != null) {
-                Log.d("Path: ", path);
-                Toast.makeText(this, "Picked file: " + path, Toast.LENGTH_LONG).show();
+                Log.d("Path (fragment): ", path);
+                Toast.makeText(getContext(), "Picked file in fragment: " + path, Toast.LENGTH_LONG).show();
             }
         }
     }

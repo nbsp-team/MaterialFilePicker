@@ -25,7 +25,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.Dire
 
     public class DirectoryViewHolder extends RecyclerView.ViewHolder {
         private ImageView mFileImage;
-        private TextView mFileTite;
+        private TextView mFileTitle;
         private TextView mFileSubtitle;
 
         public DirectoryViewHolder(View itemView, final OnItemClickListener clickListener) {
@@ -39,7 +39,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.Dire
             });
 
             mFileImage = (ImageView) itemView.findViewById(R.id.item_file_image);
-            mFileTite = (TextView) itemView.findViewById(R.id.item_file_title);
+            mFileTitle = (TextView) itemView.findViewById(R.id.item_file_title);
             mFileSubtitle = (TextView) itemView.findViewById(R.id.item_file_subtitle);
         }
     }
@@ -73,7 +73,7 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.Dire
         FileTypeUtils.FileType fileType = FileTypeUtils.getFileType(currentFile);
         holder.mFileImage.setImageResource(fileType.getIcon());
         holder.mFileSubtitle.setText(fileType.getDescription());
-        holder.mFileTite.setText(currentFile.getName());
+        holder.mFileTitle.setText(currentFile.getName());
     }
 
     @Override

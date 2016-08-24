@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
     gitUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
 
-    libraryVersion = '1.09'
+    libraryVersion = '1.1'
 
     developerId = 'lukaville'
     developerName = 'Nickolay Chameev'
@@ -25,14 +25,14 @@ ext {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 10
-        versionName "1.09"
+        versionName "1.1"
     }
     buildTypes {
         release {
@@ -46,9 +46,11 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+
+    compile 'com.android.support:appcompat-v7:24.1.0'
+    compile 'com.android.support:recyclerview-v7:24.1.0'
+    compile 'com.android.support:design:24.1.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

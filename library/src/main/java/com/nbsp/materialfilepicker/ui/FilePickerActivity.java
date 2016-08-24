@@ -13,10 +13,15 @@ import android.widget.TextView;
 
 import com.nbsp.materialfilepicker.R;
 import com.nbsp.materialfilepicker.filter.CompositeFilter;
+import com.nbsp.materialfilepicker.filter.PatternFilter;
 import com.nbsp.materialfilepicker.utils.FileUtils;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Created by Dimorinny on 24.10.15.
@@ -59,7 +64,15 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     @SuppressWarnings("unchecked")
     private void initArguments() {
         if (getIntent().hasExtra(ARG_FILTER)) {
-            mFilter = (CompositeFilter) getIntent().getSerializableExtra(ARG_FILTER);
+            Serializable filter = getIntent().getSerializableExtra(ARG_FILTER);
+
+            if (filter instanceof Pattern) {
+                ArrayList<FileFilter> filters = new ArrayList<>();
+                filters.add(new PatternFilter((Pattern) filter, false));
+                mFilter = new CompositeFilter(filters);
+            } else {
+                mFilter = (CompositeFilter) filter;
+            }
         }
 
         if (getIntent().hasExtra(ARG_START_PATH)) {
@@ -68,7 +81,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         }
 
         if (getIntent().hasExtra(ARG_CURRENT_PATH)) {
-            String currentPath = getIntent().getStringExtra(ARG_START_PATH);
+            String currentPath = getIntent().getStringExtra(ARG_CURRENT_PATH);
 
             if (currentPath.startsWith(mStartPath)) {
                 mCurrentPath = currentPath;

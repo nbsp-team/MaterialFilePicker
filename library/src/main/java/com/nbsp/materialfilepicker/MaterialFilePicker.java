@@ -3,6 +3,7 @@ package com.nbsp.materialfilepicker;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.support.annotation.StyleRes;
 
 import com.nbsp.materialfilepicker.filter.CompositeFilter;
 import com.nbsp.materialfilepicker.filter.HiddenFilter;
@@ -28,6 +29,7 @@ public class MaterialFilePicker {
     private String mRootPath;
     private String mCurrentPath;
     private Boolean mShowHidden = false;
+    private Integer mThemeResId;
 
     public MaterialFilePicker() {
     }
@@ -131,6 +133,15 @@ public class MaterialFilePicker {
         return this;
     }
 
+    /**
+     * Set theme of picker
+     * Must be AppCompat with windowActionBar=false
+     */
+    public MaterialFilePicker withTheme(@StyleRes int theme) {
+        mThemeResId = theme;
+        return this;
+    }
+
     public CompositeFilter getFilter() {
         ArrayList<FileFilter> filters = new ArrayList<>();
 
@@ -170,6 +181,10 @@ public class MaterialFilePicker {
 
         if (mCurrentPath != null) {
             intent.putExtra(FilePickerActivity.ARG_CURRENT_PATH, mCurrentPath);
+        }
+
+        if (mThemeResId != null) {
+            intent.putExtra(FilePickerActivity.ARG_THEME, mThemeResId);
         }
 
         return intent;

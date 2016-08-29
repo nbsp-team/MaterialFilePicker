@@ -20,8 +20,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-
-task javadoc(type: Javadoc) {
-    failOnError false
-}

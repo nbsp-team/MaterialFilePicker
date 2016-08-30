@@ -28,6 +28,7 @@ public class MaterialFilePicker {
     private String mRootPath;
     private String mCurrentPath;
     private Boolean mShowHidden = false;
+    private String mTitle;
 
     public MaterialFilePicker() {
     }
@@ -131,6 +132,17 @@ public class MaterialFilePicker {
         return this;
     }
 
+
+    /**
+     * Set title of picker
+     */
+    public MaterialFilePicker withTitle(String title) {
+        mTitle = title;
+        return this;
+    }
+
+
+
     public CompositeFilter getFilter() {
         ArrayList<FileFilter> filters = new ArrayList<>();
 
@@ -170,6 +182,10 @@ public class MaterialFilePicker {
 
         if (mCurrentPath != null) {
             intent.putExtra(FilePickerActivity.ARG_CURRENT_PATH, mCurrentPath);
+        }
+
+        if (mTitle != null) {
+            intent.putExtra(FilePickerActivity.ARG_TITLE, mTitle);
         }
 
         return intent;

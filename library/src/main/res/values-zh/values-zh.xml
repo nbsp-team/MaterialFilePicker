@@ -3,7 +3,6 @@
     <!-- From: file:/Users/nickolay/Documents/work/SysMailRu/material-file-picker/library/src/main/res/values-ru/strings.xml -->
     <eat-comment/>
     <string name="empty_directory_hint">无可选文件</string>
-    <string name="file_picker_app_name">MaterialFilePicker</string>
     <string name="start_path_name">设备</string>
     <string name="type_archive">压缩包</string>
     <string name="type_certificate">证书</string>

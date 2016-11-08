@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -142,6 +143,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
             onBackPressed();
+        } else if (menuItem.getTitle().equals("Choose the directory")){
+            setResultAndFinish(mCurrentPath);
         }
         return super.onOptionsItemSelected(menuItem);
     }
@@ -192,5 +195,15 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         data.putExtra(RESULT_FILE_PATH, filePath);
         setResult(RESULT_OK, data);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        menu.add(0, 0, 0, "Choose the directory")
+            .setIcon(android.R.drawable.ic_menu_set_as)
+            .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        return true;
     }
 }

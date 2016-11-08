@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -37,6 +38,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     public static final String RESULT_FILE_PATH = "result_file_path";
     private static final int HANDLE_CLICK_DELAY = 150;
+
+    public  static final String IS_DIRECTORY = "is_directory";
 
     private Toolbar mToolbar;
     private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -142,6 +145,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
             onBackPressed();
+        } else if (menuItem.getTitle().equals("Choose the directory")){
+            setResultAndFinish(mCurrentPath, true);
         }
         return super.onOptionsItemSelected(menuItem);
     }
@@ -183,14 +188,25 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             mCurrentPath = clickedFile.getPath();
             updateTitle();
         } else {
-            setResultAndFinish(clickedFile.getPath());
+            setResultAndFinish(clickedFile.getPath(), false);
         }
     }
 
-    private void setResultAndFinish(String filePath) {
+    private void setResultAndFinish(String filePath, boolean isDirectory) {
         Intent data = new Intent();
         data.putExtra(RESULT_FILE_PATH, filePath);
+        data.putExtra(IS_DIRECTORY, isDirectory);
         setResult(RESULT_OK, data);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        menu.add(0, 0, 0, "Choose the directory")
+            .setIcon(android.R.drawable.ic_menu_set_as)
+            .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        return true;
     }
 }

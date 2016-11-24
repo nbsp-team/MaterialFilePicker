@@ -32,6 +32,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     public static final String ARG_FILTER = "arg_filter";
 
+    public static final String ARG_THEME = "arg_theme";
+
     public static final String STATE_START_PATH = "state_start_path";
     private static final String STATE_CURRENT_PATH = "state_current_path";
 
@@ -46,6 +48,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_picker);
 
@@ -58,6 +61,12 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             mCurrentPath = savedInstanceState.getString(STATE_CURRENT_PATH);
         } else {
             initFragment();
+        }
+    }
+
+    private void initTheme() {
+        if (getIntent().hasExtra(ARG_THEME)) {
+            setTheme(getIntent().getIntExtra(ARG_THEME, 0));
         }
     }
 

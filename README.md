@@ -33,9 +33,10 @@ new MaterialFilePicker()
 or
 ```java
 Intent intent = new Intent(this, FilePickerActivity.class);
-intent.putExtra(FilePickerActivity.ARG_FILE_FILTER, Pattern.compile(".*\\.txt$"));
-intent.putExtra(FilePickerActivity.ARG_DIRECTORIES_FILTER, true);
-intent.putExtra(FilePickerActivity.ARG_SHOW_HIDDEN, true);
+ArrayList filters = new ArrayList();
+filters.add(new HiddenFilter());
+filters.add(new PatternFilter(Pattern.compile(".*\\.TXT$", Pattern.CASE_INSENSITIVE), false));
+intent.putExtra(FilePickerActivity.ARG_FILTER, new CompositeFilter(filters))
 startActivityForResult(intent, 1);
 ```
 

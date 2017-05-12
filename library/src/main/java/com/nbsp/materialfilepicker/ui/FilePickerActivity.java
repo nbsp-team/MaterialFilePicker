@@ -43,7 +43,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private Toolbar mToolbar;
     private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     private String mCurrentPath = mStartPath;
-    private String mTitle;
+    private CharSequence mTitle;
 
     private CompositeFilter mFilter;
 
@@ -79,7 +79,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         }
 
         if (getIntent().hasExtra(ARG_TITLE)) {
-            mTitle = getIntent().getStringExtra(ARG_TITLE);
+            mTitle = getIntent().getCharSequenceExtra(ARG_TITLE);
         }
 
         if (getIntent().hasExtra(ARG_START_PATH)) {

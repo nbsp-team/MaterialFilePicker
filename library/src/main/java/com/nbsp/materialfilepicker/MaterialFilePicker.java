@@ -28,7 +28,7 @@ public class MaterialFilePicker {
     private String mRootPath;
     private String mCurrentPath;
     private Boolean mShowHidden = false;
-    private String mTitle;
+    private CharSequence mTitle;
 
     public MaterialFilePicker() {
     }
@@ -136,7 +136,7 @@ public class MaterialFilePicker {
     /**
      * Set title of picker
      */
-    public MaterialFilePicker withTitle(String title) {
+    public MaterialFilePicker withTitle(CharSequence title) {
         mTitle = title;
         return this;
     }

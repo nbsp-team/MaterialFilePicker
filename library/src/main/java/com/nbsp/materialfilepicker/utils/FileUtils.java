@@ -1,5 +1,7 @@
 package com.nbsp.materialfilepicker.utils;
 
+import android.os.Environment;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;
@@ -28,7 +30,11 @@ public class FileUtils {
     public static String cutLastSegmentOfPath(String path) {
         if (path.length() - path.replace("/", "").length() <= 1)
             return "/";
-        return path.substring(0, path.lastIndexOf("/"));
+        String newPath = path.substring(0, path.lastIndexOf("/"));
+        // We don't need to list the content of /storage/emulated
+        if (newPath.equals("/storage/emulated"))
+            newPath = "/storage";
+        return newPath;
     }
 
     public static String getReadableFileSize(long size) {

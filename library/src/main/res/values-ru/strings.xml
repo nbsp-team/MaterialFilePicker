@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="empty_directory_hint">Файлов нет</string>
     <string name="type_directory">Каталог</string>

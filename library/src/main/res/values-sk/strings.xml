@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="empty_directory_hint">Prázdny priečinok</string>
+    <string name="action_close">Zavrieť</string>
     <string name="type_archive">Archív</string>
     <string name="type_certificate">Certifikát</string>
     <string name="type_directory">Priečinok</string>

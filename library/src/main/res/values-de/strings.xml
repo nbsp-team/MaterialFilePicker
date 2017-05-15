@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="empty_directory_hint">Leeres Verzeichnis</string>
+    <string name="action_close">Schließen</string>
     <string name="type_archive">Archiv</string>
     <string name="type_certificate">Zertifikat</string>
     <string name="type_directory">Verzeichnis</string>

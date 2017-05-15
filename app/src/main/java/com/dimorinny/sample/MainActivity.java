@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
-
-import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
         new MaterialFilePicker()
                 .withActivity(this)
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
-                .withRootPath("/")
-                .withPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
                 .withHiddenFiles(true)
                 .withTitle("Sample title")
                 .start();

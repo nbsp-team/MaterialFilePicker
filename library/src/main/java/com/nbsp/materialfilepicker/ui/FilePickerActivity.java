@@ -33,7 +33,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public static final String ARG_CURRENT_PATH = "arg_current_path";
 
     public static final String ARG_FILTER = "arg_filter";
-
+    public static final String ARG_CLOSEABLE = "arg_closeable";
     public static final String ARG_TITLE = "arg_title";
 
     public static final String STATE_START_PATH = "state_start_path";
@@ -46,6 +46,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     private String mCurrentPath = mStartPath;
     private CharSequence mTitle;
+
+    private Boolean mCloseable;
 
     private CompositeFilter mFilter;
 
@@ -88,6 +90,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         if (getIntent().hasExtra(ARG_START_PATH)) {
             mStartPath = getIntent().getStringExtra(ARG_START_PATH);
             mCurrentPath = mStartPath;
+        }
+
+        if (getIntent().hasExtra(ARG_CLOSEABLE)) {
+            mCloseable = getIntent().getBooleanExtra(ARG_CLOSEABLE, true);
         }
 
         if (getIntent().hasExtra(ARG_CURRENT_PATH)) {
@@ -177,6 +183,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        menu.findItem(R.id.action_close).setVisible(mCloseable);
         return true;
     }
 

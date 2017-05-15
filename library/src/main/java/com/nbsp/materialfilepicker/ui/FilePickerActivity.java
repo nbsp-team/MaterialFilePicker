@@ -131,16 +131,13 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void initFragment() {
         getFragmentManager().beginTransaction()
                 .add(R.id.container, DirectoryFragment.getInstance(
-                        mStartPath, mFilter))
+                        mCurrentPath, mFilter))
                 .commit();
     }
 
     private void updateTitle() {
         if (getSupportActionBar() != null) {
             String titlePath = mCurrentPath.isEmpty() ? "/" : mCurrentPath;
-            if (titlePath.startsWith(mStartPath)) {
-                titlePath = titlePath.replaceFirst(mStartPath, getString(R.string.start_path_name));
-            }
             if (TextUtils.isEmpty(mTitle)) {
                 getSupportActionBar().setTitle(titlePath);
             } else {

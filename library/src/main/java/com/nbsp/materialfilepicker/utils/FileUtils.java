@@ -26,6 +26,8 @@ public class FileUtils {
     }
 
     public static String cutLastSegmentOfPath(String path) {
+        if (path.length() - path.replace("/", "").length() <= 1)
+            return "/";
         return path.substring(0, path.lastIndexOf("/"));
     }
 

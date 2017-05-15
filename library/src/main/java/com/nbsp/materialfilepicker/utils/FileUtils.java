@@ -1,7 +1,5 @@
 package com.nbsp.materialfilepicker.utils;
 
-import android.os.Environment;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.text.DecimalFormat;

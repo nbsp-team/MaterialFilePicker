@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="file_picker_app_name" translatable="false">MaterialFilePicker</string>
+    <string name="action_close">Close</string>
     <string name="empty_directory_hint">Empty directory</string>
-    <string name="start_path_name">Device</string>
     <string name="type_archive">Archive</string>
     <string name="type_certificate">Certificate</string>
     <string name="type_directory">Directory</string>

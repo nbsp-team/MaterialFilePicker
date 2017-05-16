@@ -26,7 +26,13 @@ public class FileUtils {
     }
 
     public static String cutLastSegmentOfPath(String path) {
-        return path.substring(0, path.lastIndexOf("/"));
+        if (path.length() - path.replace("/", "").length() <= 1)
+            return "/";
+        String newPath = path.substring(0, path.lastIndexOf("/"));
+        // We don't need to list the content of /storage/emulated
+        if (newPath.equals("/storage/emulated"))
+            newPath = "/storage";
+        return newPath;
     }
 
     public static String getReadableFileSize(long size) {

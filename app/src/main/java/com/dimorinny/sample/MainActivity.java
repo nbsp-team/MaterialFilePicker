@@ -16,8 +16,6 @@ import android.widget.Toast;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import java.util.regex.Pattern;
-
 public class MainActivity extends AppCompatActivity {
 
     public static final int PERMISSIONS_REQUEST_CODE = 0;

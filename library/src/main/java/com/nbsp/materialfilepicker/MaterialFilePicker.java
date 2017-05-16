@@ -21,7 +21,9 @@ public class MaterialFilePicker {
     private Activity mActivity;
     private Fragment mFragment;
     private android.support.v4.app.Fragment mSupportFragment;
-    
+
+    private Class<?> mFilePickerClass = FilePickerActivity.class;
+
     private Integer mRequestCode;
     private Pattern mFileFilter;
     private Boolean mDirectoriesFilter = false;
@@ -148,7 +150,12 @@ public class MaterialFilePicker {
         return this;
     }
 
-
+    public MaterialFilePicker withCustomActivity(Class<?> customActivityClass) {
+        if (!FilePickerActivity.class.isAssignableFrom(customActivityClass))
+            throw new RuntimeException("Your custom class must extend FilePickerActivity class");
+        mFilePickerClass = customActivityClass;
+        return this;
+    }
 
     public CompositeFilter getFilter() {
         ArrayList<FileFilter> filters = new ArrayList<>();
@@ -180,7 +187,7 @@ public class MaterialFilePicker {
             activity = mSupportFragment.getActivity();
         }
 
-        Intent intent = new Intent(activity, FilePickerActivity.class);
+        Intent intent = new Intent(activity, mFilePickerClass);
         intent.putExtra(FilePickerActivity.ARG_FILTER, filter);
         intent.putExtra(FilePickerActivity.ARG_CLOSEABLE, mCloseable);
 

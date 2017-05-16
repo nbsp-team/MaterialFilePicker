@@ -21,7 +21,7 @@ public class MaterialFilePicker {
     private Activity mActivity;
     private Fragment mFragment;
     private android.support.v4.app.Fragment mSupportFragment;
-
+    
     private Integer mRequestCode;
     private Pattern mFileFilter;
     private Boolean mDirectoriesFilter = false;

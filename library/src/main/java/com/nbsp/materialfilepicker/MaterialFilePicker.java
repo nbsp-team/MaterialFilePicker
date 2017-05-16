@@ -22,12 +22,15 @@ public class MaterialFilePicker {
     private Fragment mFragment;
     private android.support.v4.app.Fragment mSupportFragment;
 
+    private Class<?> mFilePickerClass = FilePickerActivity.class;
+
     private Integer mRequestCode;
     private Pattern mFileFilter;
     private Boolean mDirectoriesFilter = false;
     private String mRootPath;
     private String mCurrentPath;
     private Boolean mShowHidden = false;
+    private Boolean mCloseable = true;
     private CharSequence mTitle;
 
     public MaterialFilePicker() {
@@ -123,7 +126,6 @@ public class MaterialFilePicker {
         return this;
     }
 
-
     /**
      * Show or hide hidden files in picker
      */
@@ -132,6 +134,13 @@ public class MaterialFilePicker {
         return this;
     }
 
+    /**
+     * Show or hide close menu in picker
+     */
+    public MaterialFilePicker withCloseMenu(boolean closeable) {
+        mCloseable = closeable;
+        return this;
+    }
 
     /**
      * Set title of picker
@@ -141,7 +150,12 @@ public class MaterialFilePicker {
         return this;
     }
 
-
+    public MaterialFilePicker withCustomActivity(Class<?> customActivityClass) {
+        if (!FilePickerActivity.class.isAssignableFrom(customActivityClass))
+            throw new RuntimeException("Your custom class must extend FilePickerActivity class");
+        mFilePickerClass = customActivityClass;
+        return this;
+    }
 
     public CompositeFilter getFilter() {
         ArrayList<FileFilter> filters = new ArrayList<>();
@@ -173,8 +187,9 @@ public class MaterialFilePicker {
             activity = mSupportFragment.getActivity();
         }
 
-        Intent intent = new Intent(activity, FilePickerActivity.class);
+        Intent intent = new Intent(activity, mFilePickerClass);
         intent.putExtra(FilePickerActivity.ARG_FILTER, filter);
+        intent.putExtra(FilePickerActivity.ARG_CLOSEABLE, mCloseable);
 
         if (mRootPath != null) {
             intent.putExtra(FilePickerActivity.ARG_START_PATH, mRootPath);

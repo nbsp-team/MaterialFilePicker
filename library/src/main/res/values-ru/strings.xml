@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="empty_directory_hint">Файлов нет</string>
+    <string name="action_close">Закрыть</string>
     <string name="type_directory">Каталог</string>
     <string name="type_document">Файл</string>
     <string name="type_certificate">Сертификат</string>
@@ -12,5 +14,4 @@
     <string name="type_power_point">Презентация</string>
     <string name="type_word">Документ</string>
     <string name="type_archive">Архив</string>
-    <string name="start_path_name">Устройство</string>
 </resources>

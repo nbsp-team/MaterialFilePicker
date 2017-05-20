@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class FileTypeUtils {
     public enum FileType {
-        DIRECTORY(R.drawable.ic_folder_gray_48dp, R.string.type_directory),
+        DIRECTORY(R.drawable.ic_folder_48dp, R.string.type_directory),
         DOCUMENT(R.drawable.ic_document_box, R.string.type_document),
         CERTIFICATE(R.drawable.ic_certificate_box, R.string.type_certificate, "cer", "der", "pfx", "p12", "arm", "pem"),
         DRAWING(R.drawable.ic_drawing_box, R.string.type_drawing, "ai", "cdr", "dfx", "eps", "svg", "stl", "wmf", "emf", "art", "xar"),

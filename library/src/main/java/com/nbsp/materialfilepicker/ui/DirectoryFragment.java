@@ -15,8 +15,6 @@ import com.nbsp.materialfilepicker.utils.FileUtils;
 import com.nbsp.materialfilepicker.widget.EmptyRecyclerView;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
 
 /**
  * Created by Dimorinny on 24.10.15.

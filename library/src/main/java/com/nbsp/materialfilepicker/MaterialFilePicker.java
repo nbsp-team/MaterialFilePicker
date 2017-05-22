@@ -207,6 +207,7 @@ public class MaterialFilePicker {
     /**
      * Open Material File Picker activity.
      * You should set Activity or Fragment before calling this method
+     *
      * @see MaterialFilePicker#withActivity(Activity)
      * @see MaterialFilePicker#withFragment(Fragment)
      * @see MaterialFilePicker#withSupportFragment(android.support.v4.app.Fragment)

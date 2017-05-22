@@ -125,7 +125,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             f.setAccessible(true);
             TextView textView = (TextView) f.get(mToolbar);
             textView.setEllipsize(TextUtils.TruncateAt.START);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         if (!TextUtils.isEmpty(mTitle)) {
             setTitle(mTitle);

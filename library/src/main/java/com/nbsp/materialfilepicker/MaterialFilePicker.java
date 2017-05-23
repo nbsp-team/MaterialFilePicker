@@ -22,7 +22,7 @@ public class MaterialFilePicker {
     private Fragment mFragment;
     private android.support.v4.app.Fragment mSupportFragment;
 
-    private Class<?> mFilePickerClass = FilePickerActivity.class;
+    private Class<? extends FilePickerActivity> mFilePickerClass = FilePickerActivity.class;
 
     private Integer mRequestCode;
     private Pattern mFileFilter;
@@ -150,9 +150,7 @@ public class MaterialFilePicker {
         return this;
     }
 
-    public MaterialFilePicker withCustomActivity(Class<?> customActivityClass) {
-        if (!FilePickerActivity.class.isAssignableFrom(customActivityClass))
-            throw new RuntimeException("Your custom class must extend FilePickerActivity class");
+    public MaterialFilePicker withCustomActivity(Class<? extends FilePickerActivity> customActivityClass) {
         mFilePickerClass = customActivityClass;
         return this;
     }
@@ -209,6 +207,7 @@ public class MaterialFilePicker {
     /**
      * Open Material File Picker activity.
      * You should set Activity or Fragment before calling this method
+     *
      * @see MaterialFilePicker#withActivity(Activity)
      * @see MaterialFilePicker#withFragment(Fragment)
      * @see MaterialFilePicker#withSupportFragment(android.support.v4.app.Fragment)

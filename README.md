@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.nbsp:library:1.4'
+    compile 'com.nbsp:library:1.5'
 }
 ```
 

@@ -56,21 +56,15 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_picker);
 
-        initArguments();
+        initArguments(savedInstanceState);
         initViews();
         initToolbar();
         initBackStackState();
-
-        if (savedInstanceState != null) {
-            mStartPath = savedInstanceState.getString(STATE_START_PATH);
-            mCurrentPath = savedInstanceState.getString(STATE_CURRENT_PATH);
-        } else {
-            initFragment();
-        }
+        initFragment();
     }
 
     @SuppressWarnings("unchecked")
-    private void initArguments() {
+    private void initArguments(Bundle savedInstanceState) {
         if (getIntent().hasExtra(ARG_FILTER)) {
             Serializable filter = getIntent().getSerializableExtra(ARG_FILTER);
 
@@ -83,25 +77,31 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             }
         }
 
+        if (savedInstanceState != null) {
+            mStartPath = savedInstanceState.getString(STATE_START_PATH);
+            mCurrentPath = savedInstanceState.getString(STATE_CURRENT_PATH);
+            updateTitle();
+        } else {
+            if (getIntent().hasExtra(ARG_START_PATH)) {
+                mStartPath = getIntent().getStringExtra(ARG_START_PATH);
+                mCurrentPath = mStartPath;
+            }
+
+            if (getIntent().hasExtra(ARG_CURRENT_PATH)) {
+                String currentPath = getIntent().getStringExtra(ARG_CURRENT_PATH);
+
+                if (currentPath.startsWith(mStartPath)) {
+                    mCurrentPath = currentPath;
+                }
+            }
+        }
+
         if (getIntent().hasExtra(ARG_TITLE)) {
             mTitle = getIntent().getCharSequenceExtra(ARG_TITLE);
         }
 
-        if (getIntent().hasExtra(ARG_START_PATH)) {
-            mStartPath = getIntent().getStringExtra(ARG_START_PATH);
-            mCurrentPath = mStartPath;
-        }
-
         if (getIntent().hasExtra(ARG_CLOSEABLE)) {
             mCloseable = getIntent().getBooleanExtra(ARG_CLOSEABLE, true);
-        }
-
-        if (getIntent().hasExtra(ARG_CURRENT_PATH)) {
-            String currentPath = getIntent().getStringExtra(ARG_CURRENT_PATH);
-
-            if (currentPath.startsWith(mStartPath)) {
-                mCurrentPath = currentPath;
-            }
         }
     }
 

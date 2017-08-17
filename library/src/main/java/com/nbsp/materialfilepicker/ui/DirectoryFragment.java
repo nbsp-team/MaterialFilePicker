@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +27,18 @@ public class DirectoryFragment extends Fragment {
 
     private static final String ARG_FILE_PATH = "arg_file_path";
     private static final String ARG_FILTER = "arg_filter";
+    private static final String ARG_CHOOSE_FOLDER_MODE = "arg_choose_folder";
 
     private View mEmptyView;
     private String mPath;
+    private boolean mChooseFolderMode;
 
     private CompositeFilter mFilter;
 
     private EmptyRecyclerView mDirectoryRecyclerView;
     private DirectoryAdapter mDirectoryAdapter;
     private FileClickListener mFileClickListener;
+    private FloatingActionButton floatingActionButton;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -50,12 +54,13 @@ public class DirectoryFragment extends Fragment {
     }
 
     public static DirectoryFragment getInstance(
-            String path, CompositeFilter filter) {
+            String path, CompositeFilter filter, boolean chooseFolderMode) {
         DirectoryFragment instance = new DirectoryFragment();
 
         Bundle args = new Bundle();
         args.putString(ARG_FILE_PATH, path);
         args.putSerializable(ARG_FILTER, filter);
+        args.putBoolean(ARG_CHOOSE_FOLDER_MODE, chooseFolderMode);
         instance.setArguments(args);
 
         return instance;
@@ -67,6 +72,8 @@ public class DirectoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_directory, container, false);
         mDirectoryRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.directory_recycler_view);
         mEmptyView = view.findViewById(R.id.directory_empty_view);
+        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab_select_folder);
+
         return view;
     }
 
@@ -75,6 +82,20 @@ public class DirectoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initArgs();
         initFilesList();
+        setupFab();
+    }
+
+    public void setupFab() {
+        if (mChooseFolderMode) {
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mFileClickListener.onFileClicked(new File(mPath));
+                }
+            });
+        } else {
+            floatingActionButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void initFilesList() {
@@ -102,5 +123,7 @@ public class DirectoryFragment extends Fragment {
         }
 
         mFilter = (CompositeFilter) getArguments().getSerializable(ARG_FILTER);
+
+        mChooseFolderMode = getArguments().getBoolean(ARG_CHOOSE_FOLDER_MODE);
     }
 }

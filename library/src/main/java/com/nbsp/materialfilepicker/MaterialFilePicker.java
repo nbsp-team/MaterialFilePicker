@@ -31,6 +31,7 @@ public class MaterialFilePicker {
     private String mCurrentPath;
     private Boolean mShowHidden = false;
     private Boolean mCloseable = true;
+    private boolean mChooseFolderMode = false;
     private CharSequence mTitle;
 
     public MaterialFilePicker() {
@@ -142,6 +143,11 @@ public class MaterialFilePicker {
         return this;
     }
 
+    public MaterialFilePicker withChooseFolderMode(boolean enabled) {
+        mChooseFolderMode = true;
+        return this;
+    }
+
     /**
      * Set title of picker
      */
@@ -200,6 +206,8 @@ public class MaterialFilePicker {
         if (mTitle != null) {
             intent.putExtra(FilePickerActivity.ARG_TITLE, mTitle);
         }
+
+        intent.putExtra(FilePickerActivity.ARG_CHOOSE_FOLDER_MODE, mChooseFolderMode);
 
         return intent;
     }

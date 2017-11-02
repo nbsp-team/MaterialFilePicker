@@ -52,3 +52,8 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
+Runtime permissions:
+
+You should handle runtime permissions in activity, from what you called Material File Picker.
+Look [here](https://github.com/nbsp-team/MaterialFilePicker/blob/master/app/src/main/java/com/dimorinny/sample/MainActivity.java#L38-L69) for example code.

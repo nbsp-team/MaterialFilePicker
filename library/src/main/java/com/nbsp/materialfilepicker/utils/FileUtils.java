@@ -1,55 +1,38 @@
 package com.nbsp.materialfilepicker.utils;
 
-import android.support.annotation.Nullable;
-
 import java.io.File;
+import java.io.FileFilter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * Created by Dimorinny on 24.10.15.
  */
 public class FileUtils {
-    public static List<File> getFileListByDirPath(String path,
-                                                  @Nullable Pattern fileFilter,
-                                                  boolean directoriesFilter,
-                                                  boolean showHidden) {
+    public static List<File> getFileListByDirPath(String path, FileFilter filter) {
         File directory = new File(path);
-        List<File> resultFiles = new ArrayList<>();
+        File[] files = directory.listFiles(filter);
 
-        File[] files = directory.listFiles();
-        if (files != null && files.length > 0) {
-            for (File f : files) {
-
-                if (f.isDirectory() && !directoriesFilter) {
-                    if (!f.isHidden() || (f.isHidden() && showHidden)) {
-                        resultFiles.add(f);
-                    }
-                    continue;
-                }
-
-                if (fileFilter != null) {
-                    if (fileFilter.matcher(f.getName()).matches())
-                        if (!f.isHidden() || (f.isHidden() && showHidden)) {
-                            resultFiles.add(f);
-                        }
-                } else {
-                    resultFiles.add(f);
-                }
-
-            }
-
-            Collections.sort(resultFiles, new FileComparator());
+        if (files == null) {
+            return new ArrayList<>();
         }
 
-        return resultFiles;
+        List<File> result = Arrays.asList(files);
+        Collections.sort(result, new FileComparator());
+        return result;
     }
 
     public static String cutLastSegmentOfPath(String path) {
-        return path.substring(0, path.lastIndexOf("/"));
+        if (path.length() - path.replace("/", "").length() <= 1)
+            return "/";
+        String newPath = path.substring(0, path.lastIndexOf("/"));
+        // We don't need to list the content of /storage/emulated
+        if (newPath.equals("/storage/emulated"))
+            newPath = "/storage";
+        return newPath;
     }
 
     public static String getReadableFileSize(long size) {

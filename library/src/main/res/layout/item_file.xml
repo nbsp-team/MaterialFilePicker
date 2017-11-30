@@ -11,8 +11,9 @@
         android:id="@+id/item_file_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/ic_folder_gray_48dp"
-        android:layout_margin="16dp"/>
+        android:src="@drawable/ic_folder_48dp"
+        android:layout_margin="16dp"
+        android:alpha="0.6"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,8 +29,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textSize="18sp"
-            android:textColor="@color/item_file_title_color"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
             />
 
         <TextView

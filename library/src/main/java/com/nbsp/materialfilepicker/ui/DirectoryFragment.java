@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nbsp.materialfilepicker.R;
+import com.nbsp.materialfilepicker.filter.CompositeFilter;
 import com.nbsp.materialfilepicker.utils.FileUtils;
 import com.nbsp.materialfilepicker.widget.EmptyRecyclerView;
 
 import java.io.File;
-import java.util.regex.Pattern;
 
 /**
  * Created by Dimorinny on 24.10.15.
@@ -25,17 +25,12 @@ public class DirectoryFragment extends Fragment {
     }
 
     private static final String ARG_FILE_PATH = "arg_file_path";
-    private static final String ARG_FILE_FILTER = "arg_regexp_file_filter";
-    private static final String ARG_DIRECTORIES_FILTER = "arg_directories_filter";
-    private static final String ARG_SHOW_HIDDEN = "arg_show_hidden";
+    private static final String ARG_FILTER = "arg_filter";
 
     private View mEmptyView;
     private String mPath;
 
-    @Nullable private Pattern mFileFilter;
-    private boolean mDirectoryFilter;
-
-    private boolean mShowHidden;
+    private CompositeFilter mFilter;
 
     private EmptyRecyclerView mDirectoryRecyclerView;
     private DirectoryAdapter mDirectoryAdapter;
@@ -55,14 +50,12 @@ public class DirectoryFragment extends Fragment {
     }
 
     public static DirectoryFragment getInstance(
-            String path, @Nullable Pattern filter, boolean directoriesFilter, boolean showHidden) {
+            String path, CompositeFilter filter) {
         DirectoryFragment instance = new DirectoryFragment();
 
         Bundle args = new Bundle();
         args.putString(ARG_FILE_PATH, path);
-        args.putSerializable(ARG_FILE_FILTER, filter);
-        args.putBoolean(ARG_DIRECTORIES_FILTER, directoriesFilter);
-        args.putBoolean(ARG_SHOW_HIDDEN, showHidden);
+        args.putSerializable(ARG_FILTER, filter);
         instance.setArguments(args);
 
         return instance;
@@ -86,7 +79,7 @@ public class DirectoryFragment extends Fragment {
 
     private void initFilesList() {
         mDirectoryAdapter = new DirectoryAdapter(getActivity(),
-                FileUtils.getFileListByDirPath(mPath, mFileFilter, mDirectoryFilter, mShowHidden));
+                FileUtils.getFileListByDirPath(mPath, mFilter));
 
         mDirectoryAdapter.setOnItemClickListener(new DirectoryAdapter.OnItemClickListener() {
             @Override
@@ -102,12 +95,12 @@ public class DirectoryFragment extends Fragment {
         mDirectoryRecyclerView.setEmptyView(mEmptyView);
     }
 
+    @SuppressWarnings("unchecked")
     private void initArgs() {
         if (getArguments().getString(ARG_FILE_PATH) != null) {
             mPath = getArguments().getString(ARG_FILE_PATH);
         }
-        mDirectoryFilter = getArguments().getBoolean(ARG_DIRECTORIES_FILTER);
-        mFileFilter = (Pattern) getArguments().getSerializable(ARG_FILE_FILTER);
-        mShowHidden = getArguments().getBoolean(ARG_SHOW_HIDDEN, false);
+
+        mFilter = (CompositeFilter) getArguments().getSerializable(ARG_FILTER);
     }
 }

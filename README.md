@@ -58,6 +58,13 @@ Runtime permissions:
 You should handle runtime permissions in activity, from what you called Material File Picker.
 Look [here](https://github.com/nbsp-team/MaterialFilePicker/blob/master/app/src/main/java/com/dimorinny/sample/MainActivity.java#L38-L69) for example code.
 
+###You will also need to add this colors to your colors.xml
+```
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+```
+Thanks to [prscX](https://github.com/prscX), readme proposal change by [NokisDemox](https://github.com/NokisDemox)
 ## Third Party Bindings
 
 ### React Native

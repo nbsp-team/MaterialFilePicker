@@ -35,10 +35,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public static final String ARG_FILTER = "arg_filter";
     public static final String ARG_CLOSEABLE = "arg_closeable";
     public static final String ARG_TITLE = "arg_title";
+    public static final String ARG_CHOOSE_FOLDER_MODE = "arg_folder_mode";
 
     public static final String STATE_START_PATH = "state_start_path";
     private static final String STATE_CURRENT_PATH = "state_current_path";
-
     public static final String RESULT_FILE_PATH = "result_file_path";
     private static final int HANDLE_CLICK_DELAY = 150;
 
@@ -50,6 +50,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private Boolean mCloseable = true;
 
     private CompositeFilter mFilter;
+    private boolean mChooseFolderMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         if (getIntent().hasExtra(ARG_CLOSEABLE)) {
             mCloseable = getIntent().getBooleanExtra(ARG_CLOSEABLE, true);
         }
+
+        mChooseFolderMode = getIntent().getBooleanExtra(ARG_CHOOSE_FOLDER_MODE, false);
     }
 
     private void initToolbar() {
@@ -141,7 +144,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void initFragment() {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, DirectoryFragment.getInstance(
-                        mCurrentPath, mFilter))
+                        mCurrentPath, mFilter, mChooseFolderMode))
                 .addToBackStack(null)
                 .commit();
     }
@@ -176,7 +179,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void addFragmentToBackStack(String path) {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, DirectoryFragment.getInstance(
-                        path, mFilter))
+                        path, mFilter, mChooseFolderMode))
                 .addToBackStack(null)
                 .commit();
     }
@@ -230,7 +233,9 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void handleFileClicked(final File clickedFile) {
-        if (clickedFile.isDirectory()) {
+        if (mChooseFolderMode && clickedFile.isDirectory() && clickedFile.getAbsolutePath().equals(mCurrentPath)) {
+            setResultAndFinish(clickedFile.getPath());
+        } else if (clickedFile.isDirectory()) {
             mCurrentPath = clickedFile.getPath();
             // If the user wanna go to the emulated directory, he will be taken to the
             // corresponding user emulated folder.
@@ -238,7 +243,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
                 mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
             addFragmentToBackStack(mCurrentPath);
             updateTitle();
-        } else {
+        } else if (!mChooseFolderMode) {
             setResultAndFinish(clickedFile.getPath());
         }
     }

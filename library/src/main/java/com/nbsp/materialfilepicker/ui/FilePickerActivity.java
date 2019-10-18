@@ -47,7 +47,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private String mCurrentPath = mStartPath;
     private CharSequence mTitle;
 
-    private Boolean mCloseable;
+    private Boolean mCloseable = true;
 
     private CompositeFilter mFilter;
 

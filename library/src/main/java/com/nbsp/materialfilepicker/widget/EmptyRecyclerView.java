@@ -1,15 +1,26 @@
 package com.nbsp.materialfilepicker.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class EmptyRecyclerView extends RecyclerView {
+
     @Nullable
-    View mEmptyView;
+    private View mEmptyView;
+
+    @NonNull
+    private final AdapterDataObserver observer = new AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            checkIfEmpty();
+        }
+    };
 
     public EmptyRecyclerView(Context context) {
         super(context);
@@ -24,20 +35,12 @@ public class EmptyRecyclerView extends RecyclerView {
     }
 
     void checkIfEmpty() {
-        if (mEmptyView != null) {
-            mEmptyView.setVisibility(getAdapter().getItemCount() > 0 ? GONE : VISIBLE);
+        final Adapter adapter = getAdapter();
+
+        if (mEmptyView != null && adapter != null) {
+            mEmptyView.setVisibility(adapter.getItemCount() > 0 ? GONE : VISIBLE);
         }
     }
-
-    final
-    @NonNull
-    AdapterDataObserver observer = new AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            checkIfEmpty();
-        }
-    };
 
     @Override
     public void setAdapter(@Nullable Adapter adapter) {

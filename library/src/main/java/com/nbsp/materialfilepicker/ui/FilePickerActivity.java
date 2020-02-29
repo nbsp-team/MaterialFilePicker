@@ -1,33 +1,31 @@
 package com.nbsp.materialfilepicker.ui;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.nbsp.materialfilepicker.R;
-import com.nbsp.materialfilepicker.filter.CompositeFilter;
+import com.nbsp.materialfilepicker.filter.FileFilter;
 import com.nbsp.materialfilepicker.filter.PatternFilter;
 import com.nbsp.materialfilepicker.utils.FileUtils;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
-/**
- * Created by Dimorinny on 24.10.15.
- */
 public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener {
     public static final String ARG_START_PATH = "arg_start_path";
     public static final String ARG_CURRENT_PATH = "arg_current_path";
@@ -49,7 +47,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private Boolean mCloseable = true;
 
-    private CompositeFilter mFilter;
+    private FileFilter mFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +61,14 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         initFragment();
     }
 
-    @SuppressWarnings("unchecked")
     private void initArguments(Bundle savedInstanceState) {
         if (getIntent().hasExtra(ARG_FILTER)) {
             Serializable filter = getIntent().getSerializableExtra(ARG_FILTER);
 
             if (filter instanceof Pattern) {
-                ArrayList<FileFilter> filters = new ArrayList<>();
-                filters.add(new PatternFilter((Pattern) filter, false));
-                mFilter = new CompositeFilter(filters);
+                mFilter = new PatternFilter((Pattern) filter, false);
             } else {
-                mFilter = (CompositeFilter) filter;
+                mFilter = (FileFilter) filter;
             }
         }
 
@@ -135,20 +130,19 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void initViews() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
     }
 
     private void initFragment() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(
-                        mCurrentPath, mFilter))
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, DirectoryFragment.getInstance(mCurrentPath, mFilter))
                 .addToBackStack(null)
                 .commit();
     }
 
     private void initBackStackState() {
+        final List<String> separatedPaths = new ArrayList<>();
         String pathToAdd = mCurrentPath;
-        ArrayList<String> separatedPaths = new ArrayList<>();
 
         while (!pathToAdd.equals(mStartPath)) {
             pathToAdd = FileUtils.cutLastSegmentOfPath(pathToAdd);
@@ -174,9 +168,9 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void addFragmentToBackStack(String path) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(
-                        path, mFilter))
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, DirectoryFragment.getInstance(path, mFilter))
                 .addToBackStack(null)
                 .commit();
     }
@@ -200,10 +194,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
-
         if (!mCurrentPath.equals(mStartPath)) {
-            fm.popBackStack();
+            getSupportFragmentManager().popBackStack();
             mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
             updateTitle();
         } else {
@@ -213,7 +205,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_CURRENT_PATH, mCurrentPath);
         outState.putString(STATE_START_PATH, mStartPath);
@@ -221,12 +213,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     @Override
     public void onFileClicked(final File clickedFile) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                handleFileClicked(clickedFile);
-            }
-        }, HANDLE_CLICK_DELAY);
+        new Handler().postDelayed(() -> handleFileClicked(clickedFile), HANDLE_CLICK_DELAY);
     }
 
     private void handleFileClicked(final File clickedFile) {
@@ -234,8 +221,9 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             mCurrentPath = clickedFile.getPath();
             // If the user wanna go to the emulated directory, he will be taken to the
             // corresponding user emulated folder.
-            if (mCurrentPath.equals("/storage/emulated"))
+            if (mCurrentPath.equals("/storage/emulated")) {
                 mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            }
             addFragmentToBackStack(mCurrentPath);
             updateTitle();
         } else {
@@ -245,8 +233,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void setResultAndFinish(String filePath) {
         Intent data = new Intent();
+
         data.putExtra(RESULT_FILE_PATH, filePath);
         setResult(RESULT_OK, data);
+
         finish();
     }
 }

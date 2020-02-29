@@ -1,20 +1,19 @@
 package com.nbsp.materialfilepicker.utils;
 
+import com.nbsp.materialfilepicker.filter.FileFilter;
+
 import java.io.File;
-import java.io.FileFilter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Dimorinny on 24.10.15.
- */
 public class FileUtils {
+
     public static List<File> getFileListByDirPath(String path, FileFilter filter) {
         File directory = new File(path);
-        File[] files = directory.listFiles(filter);
+        File[] files = directory.listFiles(filter::accept);
 
         if (files == null) {
             return new ArrayList<>();
@@ -26,12 +25,15 @@ public class FileUtils {
     }
 
     public static String cutLastSegmentOfPath(String path) {
-        if (path.length() - path.replace("/", "").length() <= 1)
+        if (path.length() - path.replace("/", "").length() <= 1) {
             return "/";
+        }
         String newPath = path.substring(0, path.lastIndexOf("/"));
         // We don't need to list the content of /storage/emulated
-        if (newPath.equals("/storage/emulated"))
+        if (newPath.equals("/storage/emulated")) {
             newPath = "/storage";
+        }
+
         return newPath;
     }
 

@@ -10,11 +10,8 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by nickolay on 25.10.15.
- */
-
 public class FileTypeUtils {
+
     public enum FileType {
         DIRECTORY(R.drawable.ic_folder_48dp, R.string.type_directory),
         DOCUMENT(R.drawable.ic_document_box, R.string.type_document),
@@ -30,9 +27,9 @@ public class FileTypeUtils {
         ARCHIVE(R.drawable.ic_zip_box, R.string.type_archive, "cab", "7z", "alz", "arj", "bzip2", "bz2", "dmg", "gzip", "gz", "jar", "lz", "lzip", "lzma", "zip", "rar", "tar", "tgz"),
         APK(R.drawable.ic_apk_box, R.string.type_apk, "apk");
 
-        private int icon;
-        private int description;
-        private String[] extensions;
+        private final int icon;
+        private final int description;
+        private final String[] extensions;
 
         FileType(int icon, int description, String... extensions) {
             this.icon = icon;
@@ -76,7 +73,7 @@ public class FileTypeUtils {
         return FileType.DOCUMENT;
     }
 
-    public static String getExtension(String fileName) {
+    private static String getExtension(String fileName) {
         String encoded;
         try {
             encoded = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20");

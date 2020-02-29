@@ -1,28 +1,26 @@
 package com.nbsp.materialfilepicker.ui;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.nbsp.materialfilepicker.R;
-import com.nbsp.materialfilepicker.filter.CompositeFilter;
+import com.nbsp.materialfilepicker.filter.FileFilter;
 import com.nbsp.materialfilepicker.utils.FileUtils;
 import com.nbsp.materialfilepicker.widget.EmptyRecyclerView;
 
 import java.io.File;
 
-/**
- * Created by Dimorinny on 24.10.15.
- */
+import static java.util.Objects.requireNonNull;
+
 public class DirectoryFragment extends Fragment {
-    interface FileClickListener {
-        void onFileClicked(File clickedFile);
-    }
 
     private static final String ARG_FILE_PATH = "arg_file_path";
     private static final String ARG_FILTER = "arg_filter";
@@ -30,17 +28,16 @@ public class DirectoryFragment extends Fragment {
     private View mEmptyView;
     private String mPath;
 
-    private CompositeFilter mFilter;
+    private FileFilter mFilter;
 
     private EmptyRecyclerView mDirectoryRecyclerView;
     private DirectoryAdapter mDirectoryAdapter;
     private FileClickListener mFileClickListener;
 
-    @SuppressWarnings("deprecation")
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mFileClickListener = (FileClickListener) activity;
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mFileClickListener = (FileClickListener) context;
     }
 
     @Override
@@ -49,11 +46,13 @@ public class DirectoryFragment extends Fragment {
         mFileClickListener = null;
     }
 
-    public static DirectoryFragment getInstance(
-            String path, CompositeFilter filter) {
-        DirectoryFragment instance = new DirectoryFragment();
+    static DirectoryFragment getInstance(
+            String path,
+            FileFilter filter
+    ) {
+        final DirectoryFragment instance = new DirectoryFragment();
 
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString(ARG_FILE_PATH, path);
         args.putSerializable(ARG_FILTER, filter);
         instance.setArguments(args);
@@ -64,29 +63,27 @@ public class DirectoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_directory, container, false);
-        mDirectoryRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.directory_recycler_view);
+        final View view = inflater.inflate(R.layout.fragment_directory, container, false);
+
+        mDirectoryRecyclerView = view.findViewById(R.id.directory_recycler_view);
         mEmptyView = view.findViewById(R.id.directory_empty_view);
+
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initArgs();
         initFilesList();
     }
 
     private void initFilesList() {
-        mDirectoryAdapter = new DirectoryAdapter(getActivity(),
-                FileUtils.getFileListByDirPath(mPath, mFilter));
+        mDirectoryAdapter = new DirectoryAdapter(FileUtils.getFileListByDirPath(mPath, mFilter));
 
-        mDirectoryAdapter.setOnItemClickListener(new DirectoryAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mFileClickListener != null) {
-                    mFileClickListener.onFileClicked(mDirectoryAdapter.getModel(position));
-                }
+        mDirectoryAdapter.setOnItemClickListener((view, position) -> {
+            if (mFileClickListener != null) {
+                mFileClickListener.onFileClicked(mDirectoryAdapter.getModel(position));
             }
         });
 
@@ -95,12 +92,17 @@ public class DirectoryFragment extends Fragment {
         mDirectoryRecyclerView.setEmptyView(mEmptyView);
     }
 
-    @SuppressWarnings("unchecked")
     private void initArgs() {
-        if (getArguments().getString(ARG_FILE_PATH) != null) {
+        final Bundle arguments = requireNonNull(getArguments());
+
+        if (arguments.getString(ARG_FILE_PATH) != null) {
             mPath = getArguments().getString(ARG_FILE_PATH);
         }
 
-        mFilter = (CompositeFilter) getArguments().getSerializable(ARG_FILTER);
+        mFilter = (FileFilter) getArguments().getSerializable(ARG_FILTER);
+    }
+
+    interface FileClickListener {
+        void onFileClicked(File clickedFile);
     }
 }

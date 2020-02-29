@@ -1,8 +1,5 @@
 <resources>
-    <string name="app_name">MaterialFilePicker Sample</string>
-    <string name="pick_from_activity">Pick file from activity</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="pick_from_fragment">Pick from fragment</string>
+    <string name="app_name" translatable="false">MaterialFilePicker Sample</string>
+    <string name="pick_from_activity" translatable="false">Pick file from activity</string>
+    <string name="pick_from_fragment" translatable="false">Pick from fragment</string>
 </resources>

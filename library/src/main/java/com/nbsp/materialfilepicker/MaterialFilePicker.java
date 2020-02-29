@@ -5,22 +5,21 @@ import android.app.Fragment;
 import android.content.Intent;
 
 import com.nbsp.materialfilepicker.filter.CompositeFilter;
+import com.nbsp.materialfilepicker.filter.FileFilter;
 import com.nbsp.materialfilepicker.filter.HiddenFilter;
 import com.nbsp.materialfilepicker.filter.PatternFilter;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
-
-/**
- * Material File Picker builder
- */
+@SuppressWarnings("WeakerAccess")
 public class MaterialFilePicker {
     private Activity mActivity;
+
     private Fragment mFragment;
-    private android.support.v4.app.Fragment mSupportFragment;
+    private androidx.fragment.app.Fragment mSupportFragment;
 
     private Class<? extends FilePickerActivity> mFilePickerClass = FilePickerActivity.class;
 
@@ -35,7 +34,6 @@ public class MaterialFilePicker {
 
     public MaterialFilePicker() {
     }
-
 
     /**
      * Specifies activity, which will be used to
@@ -67,7 +65,7 @@ public class MaterialFilePicker {
      * Specifies support fragment which will be used to
      * start file picker
      */
-    public MaterialFilePicker withSupportFragment(android.support.v4.app.Fragment fragment) {
+    public MaterialFilePicker withSupportFragment(androidx.fragment.app.Fragment fragment) {
         if (mActivity != null || mFragment != null) {
             throw new RuntimeException("You must pass either Activity, Fragment or SupportFragment");
         }
@@ -155,8 +153,36 @@ public class MaterialFilePicker {
         return this;
     }
 
-    public CompositeFilter getFilter() {
-        ArrayList<FileFilter> filters = new ArrayList<>();
+    /**
+     * Open Material File Picker activity.
+     * You should set Activity or Fragment before calling this method
+     *
+     * @see MaterialFilePicker#withActivity(Activity)
+     * @see MaterialFilePicker#withFragment(Fragment)
+     * @see MaterialFilePicker#withSupportFragment(androidx.fragment.app.Fragment)
+     */
+    public void start() {
+        if (mActivity == null && mFragment == null && mSupportFragment == null) {
+            throw new RuntimeException("You must pass Activity/Fragment by calling withActivity/withFragment/withSupportFragment method");
+        }
+
+        if (mRequestCode == null) {
+            throw new RuntimeException("You must pass request code by calling withRequestCode method");
+        }
+
+        Intent intent = getIntent();
+
+        if (mActivity != null) {
+            mActivity.startActivityForResult(intent, mRequestCode);
+        } else if (mFragment != null) {
+            mFragment.startActivityForResult(intent, mRequestCode);
+        } else {
+            mSupportFragment.startActivityForResult(intent, mRequestCode);
+        }
+    }
+
+    private CompositeFilter getFilter() {
+        final List<FileFilter> filters = new ArrayList<>();
 
         if (!mShowHidden) {
             filters.add(new HiddenFilter());
@@ -169,11 +195,7 @@ public class MaterialFilePicker {
         return new CompositeFilter(filters);
     }
 
-
-    /**
-     * @return Intent that can be used to start Material File Picker
-     */
-    public Intent getIntent() {
+    private Intent getIntent() {
         CompositeFilter filter = getFilter();
 
         Activity activity = null;
@@ -202,33 +224,5 @@ public class MaterialFilePicker {
         }
 
         return intent;
-    }
-
-    /**
-     * Open Material File Picker activity.
-     * You should set Activity or Fragment before calling this method
-     *
-     * @see MaterialFilePicker#withActivity(Activity)
-     * @see MaterialFilePicker#withFragment(Fragment)
-     * @see MaterialFilePicker#withSupportFragment(android.support.v4.app.Fragment)
-     */
-    public void start() {
-        if (mActivity == null && mFragment == null && mSupportFragment == null) {
-            throw new RuntimeException("You must pass Activity/Fragment by calling withActivity/withFragment/withSupportFragment method");
-        }
-
-        if (mRequestCode == null) {
-            throw new RuntimeException("You must pass request code by calling withRequestCode method");
-        }
-
-        Intent intent = getIntent();
-
-        if (mActivity != null) {
-            mActivity.startActivityForResult(intent, mRequestCode);
-        } else if (mFragment != null) {
-            mFragment.startActivityForResult(intent, mRequestCode);
-        } else {
-            mSupportFragment.startActivityForResult(intent, mRequestCode);
-        }
     }
 }

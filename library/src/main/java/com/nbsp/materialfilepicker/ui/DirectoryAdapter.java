@@ -1,12 +1,13 @@
 package com.nbsp.materialfilepicker.ui;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nbsp.materialfilepicker.R;
 import com.nbsp.materialfilepicker.utils.FileTypeUtils;
@@ -14,49 +15,20 @@ import com.nbsp.materialfilepicker.utils.FileTypeUtils;
 import java.io.File;
 import java.util.List;
 
-/**
- * Created by Dimorinny on 24.10.15.
- */
+class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.DirectoryViewHolder> {
 
-public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.DirectoryViewHolder> {
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    public class DirectoryViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mFileImage;
-        private TextView mFileTitle;
-        private TextView mFileSubtitle;
-
-        public DirectoryViewHolder(View itemView, final OnItemClickListener clickListener) {
-            super(itemView);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickListener.onItemClick(v, getAdapterPosition());
-                }
-            });
-
-            mFileImage = (ImageView) itemView.findViewById(R.id.item_file_image);
-            mFileTitle = (TextView) itemView.findViewById(R.id.item_file_title);
-            mFileSubtitle = (TextView) itemView.findViewById(R.id.item_file_subtitle);
-        }
-    }
-
-    private List<File> mFiles;
-    private Context mContext;
+    private final List<File> mFiles;
     private OnItemClickListener mOnItemClickListener;
 
-    public DirectoryAdapter(Context context, List<File> files) {
-        mContext = context;
+    DirectoryAdapter(List<File> files) {
         mFiles = files;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
 
+    @NonNull
     @Override
     public DirectoryViewHolder onCreateViewHolder(ViewGroup parent,
                                                   int viewType) {
@@ -81,7 +53,28 @@ public class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.Dire
         return mFiles.size();
     }
 
-    public File getModel(int index) {
+    File getModel(int index) {
         return mFiles.get(index);
+    }
+
+    interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    static class DirectoryViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView mFileImage;
+        private TextView mFileTitle;
+        private TextView mFileSubtitle;
+
+        DirectoryViewHolder(View itemView, final OnItemClickListener clickListener) {
+            super(itemView);
+
+            itemView.setOnClickListener(v -> clickListener.onItemClick(v, getAdapterPosition()));
+
+            mFileImage = itemView.findViewById(R.id.item_file_image);
+            mFileTitle = itemView.findViewById(R.id.item_file_title);
+            mFileSubtitle = itemView.findViewById(R.id.item_file_subtitle);
+        }
     }
 }

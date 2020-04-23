@@ -135,12 +135,12 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void initBackStackState() {
-        final List<File> separatedPaths = new ArrayList<>();
+        final List<File> path = new ArrayList<>();
 
         File current = mCurrent;
 
         while (true) {
-            separatedPaths.add(current);
+            path.add(current);
 
             if (current.equals(mStart)) {
                 break;
@@ -149,10 +149,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             current = FileUtils.getParentIfExists(current);
         }
 
-        Collections.reverse(separatedPaths);
+        Collections.reverse(path);
 
-        for (File path : separatedPaths) {
-            addFragmentToBackStack(path);
+        for (File file : path) {
+            addFragmentToBackStack(file);
         }
     }
 
@@ -170,7 +170,13 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void addFragmentToBackStack(File file) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(file.getAbsolutePath(), mFilter))
+                .replace(
+                        R.id.container,
+                        DirectoryFragment.getInstance(
+                                file.getAbsolutePath(),
+                                mFilter
+                        )
+                )
                 .addToBackStack(null)
                 .commit();
     }
@@ -217,6 +223,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void handleFileClicked(final File clickedFile) {
+        if (isFinishing()) {
+            return;
+        }
+
         if (clickedFile.isDirectory()) {
             mCurrent = clickedFile;
             // If the user wanna go to the emulated directory, he will be taken to the
@@ -227,14 +237,14 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             addFragmentToBackStack(mCurrent);
             updateTitle();
         } else {
-            setResultAndFinish(clickedFile.getPath());
+            setResultAndFinish(clickedFile);
         }
     }
 
-    private void setResultAndFinish(String filePath) {
+    private void setResultAndFinish(File file) {
         Intent data = new Intent();
 
-        data.putExtra(RESULT_FILE_PATH, filePath);
+        data.putExtra(RESULT_FILE_PATH, file.getPath());
         setResult(RESULT_OK, data);
 
         finish();

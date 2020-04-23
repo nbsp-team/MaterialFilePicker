@@ -30,14 +30,6 @@ new MaterialFilePicker()
     .withHiddenFiles(true) // Show hidden files and folders
     .start();
 ```
-or
-```java
-Intent intent = new Intent(this, FilePickerActivity.class);
-intent.putExtra(FilePickerActivity.ARG_FILE_FILTER, Pattern.compile(".*\\.txt$"));
-intent.putExtra(FilePickerActivity.ARG_DIRECTORIES_FILTER, true);
-intent.putExtra(FilePickerActivity.ARG_SHOW_HIDDEN, true);
-startActivityForResult(intent, 1);
-```
 
 Override on activity result:
 

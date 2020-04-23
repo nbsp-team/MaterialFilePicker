@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -14,6 +15,7 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat.checkSelfPermission
 import com.nbsp.materialfilepicker.MaterialFilePicker
 import com.nbsp.materialfilepicker.ui.FilePickerActivity
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,11 +65,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFilePicker() {
+        val externalStorage = Environment.getExternalStorageDirectory()
+        val alarmsFolder = File(externalStorage, ALARMS_EXTERNAL_STORAGE_FOLDER);
+
         MaterialFilePicker()
                 .withActivity(this)
-                .withRequestCode(FILE_PICKER_REQUEST_CODE)
+                // With cross icon on the right side of toolbar for closing picker straight away
+                .withCloseMenu(true)
+                // Entry point path (user will start from it)
+                .withPath(alarmsFolder.absolutePath)
+                // Root path (user won't be able to come higher than it)
+                .withRootPath(externalStorage.absolutePath)
+                // Showing hidden files
                 .withHiddenFiles(true)
                 .withTitle("Sample title")
+                .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .start()
     }
 
@@ -89,5 +101,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSIONS_REQUEST_CODE = 0
         private const val FILE_PICKER_REQUEST_CODE = 1
+
+        private const val ALARMS_EXTERNAL_STORAGE_FOLDER = "Alarms"
     }
 }

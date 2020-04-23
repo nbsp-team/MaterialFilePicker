@@ -24,17 +24,12 @@ public class FileUtils {
         return result;
     }
 
-    public static String cutLastSegmentOfPath(String path) {
-        if (path.length() - path.replace("/", "").length() <= 1) {
-            return "/";
-        }
-        String newPath = path.substring(0, path.lastIndexOf("/"));
-        // We don't need to list the content of /storage/emulated
-        if (newPath.equals("/storage/emulated")) {
-            newPath = "/storage";
+    public static File getParentIfExists(File file) {
+        if (file.getParent() == null) {
+            return file;
         }
 
-        return newPath;
+        return file.getParentFile();
     }
 
     public static String getReadableFileSize(long size) {

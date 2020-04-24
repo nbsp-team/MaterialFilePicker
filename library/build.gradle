@@ -1,5 +1,4 @@
 plugins {
-    id "com.github.dcendents.android-maven"
     id "com.android.library"
 }
 

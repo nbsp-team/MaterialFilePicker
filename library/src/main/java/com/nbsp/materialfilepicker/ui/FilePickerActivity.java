@@ -86,7 +86,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
             if (getIntent().hasExtra(ARG_CURRENT_FILE)) {
                 File currentFile = (File) getIntent().getSerializableExtra(ARG_CURRENT_FILE);
 
-                if (currentFile.getAbsolutePath().startsWith(mStart.getAbsolutePath())) {
+                if (FileUtils.isParent(currentFile, mStart)) {
                     mCurrent = currentFile;
                 }
             }
@@ -139,7 +139,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
         File current = mCurrent;
 
-        while (true) {
+        while (current != null) {
             path.add(current);
 
             if (current.equals(mStart)) {
@@ -173,7 +173,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
                 .replace(
                         R.id.container,
                         DirectoryFragment.getInstance(
-                                file.getAbsolutePath(),
+                                file,
                                 mFilter
                         )
                 )

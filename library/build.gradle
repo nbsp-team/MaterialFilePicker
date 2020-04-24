@@ -19,9 +19,9 @@ ext {
     developerName = 'Nickolay Chameev'
     developerEmail = 'lukaville@gmail.com'
 
-    licenseName = 'GNU GENERAL PUBLIC LICENSE Version 2'
+    licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'https://raw.githubusercontent.com/nbsp-team/MaterialFilePicker/master/LICENSE'
-    allLicenses = ["GNU-GPL-2.0"]
+    allLicenses = ["Apache-2.0"]
 }
 
 android {

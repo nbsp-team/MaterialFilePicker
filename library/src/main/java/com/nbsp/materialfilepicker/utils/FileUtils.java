@@ -1,9 +1,10 @@
 package com.nbsp.materialfilepicker.utils;
 
+import androidx.annotation.Nullable;
+
 import com.nbsp.materialfilepicker.filter.FileFilter;
 
 import java.io.File;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,8 +12,7 @@ import java.util.List;
 
 public class FileUtils {
 
-    public static List<File> getFileListByDirPath(String path, FileFilter filter) {
-        File directory = new File(path);
+    public static List<File> getFileList(File directory, FileFilter filter) {
         File[] files = directory.listFiles(filter::accept);
 
         if (files == null) {
@@ -24,18 +24,28 @@ public class FileUtils {
         return result;
     }
 
+    @Nullable
     public static File getParentIfExists(File file) {
         if (file.getParent() == null) {
-            return file;
+            return null;
         }
 
         return file.getParentFile();
     }
 
-    public static String getReadableFileSize(long size) {
-        if (size <= 0) return "0";
-        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
-        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-        return new DecimalFormat("#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    public static boolean isParent(File maybeChild, File possibleParent) {
+        if (!possibleParent.exists() || !possibleParent.isDirectory()) {
+            return false;
+        }
+
+        File child = maybeChild;
+        while (child != null) {
+            if (child.equals(possibleParent)) {
+                return true;
+            }
+            child = child.getParentFile();
+        }
+
+        return false;
     }
 }

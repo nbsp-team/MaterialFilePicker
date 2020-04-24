@@ -22,11 +22,11 @@ import static java.util.Objects.requireNonNull;
 
 public class DirectoryFragment extends Fragment {
 
-    private static final String ARG_FILE_PATH = "arg_file_path";
+    private static final String ARG_FILE = "arg_file_path";
     private static final String ARG_FILTER = "arg_filter";
 
     private View mEmptyView;
-    private String mPath;
+    private File mFile;
 
     private FileFilter mFilter;
 
@@ -47,13 +47,13 @@ public class DirectoryFragment extends Fragment {
     }
 
     static DirectoryFragment getInstance(
-            String path,
+            File file,
             FileFilter filter
     ) {
         final DirectoryFragment instance = new DirectoryFragment();
 
         final Bundle args = new Bundle();
-        args.putString(ARG_FILE_PATH, path);
+        args.putSerializable(ARG_FILE, file);
         args.putSerializable(ARG_FILTER, filter);
         instance.setArguments(args);
 
@@ -79,7 +79,7 @@ public class DirectoryFragment extends Fragment {
     }
 
     private void initFilesList() {
-        mDirectoryAdapter = new DirectoryAdapter(FileUtils.getFileListByDirPath(mPath, mFilter));
+        mDirectoryAdapter = new DirectoryAdapter(FileUtils.getFileList(mFile, mFilter));
 
         mDirectoryAdapter.setOnItemClickListener((view, position) -> {
             if (mFileClickListener != null) {
@@ -95,8 +95,8 @@ public class DirectoryFragment extends Fragment {
     private void initArgs() {
         final Bundle arguments = requireNonNull(getArguments());
 
-        if (arguments.getString(ARG_FILE_PATH) != null) {
-            mPath = getArguments().getString(ARG_FILE_PATH);
+        if (arguments.containsKey(ARG_FILE)) {
+            mFile = (File) getArguments().getSerializable(ARG_FILE);
         }
 
         mFilter = (FileFilter) getArguments().getSerializable(ARG_FILTER);

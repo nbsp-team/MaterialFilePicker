@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissionsAndOpenFilePicker() {
-        val permissionGranted = checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED
+        val permissionGranted = checkSelfPermission(this, READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED
 
         if (permissionGranted) {
             openFilePicker()
@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
             permissions: Array<String>,
             grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults.first() == PERMISSION_GRANTED) {
                 openFilePicker()

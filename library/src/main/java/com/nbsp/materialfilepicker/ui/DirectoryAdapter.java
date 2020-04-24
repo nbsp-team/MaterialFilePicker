@@ -70,7 +70,12 @@ class DirectoryAdapter extends RecyclerView.Adapter<DirectoryAdapter.DirectoryVi
         DirectoryViewHolder(View itemView, final OnItemClickListener clickListener) {
             super(itemView);
 
-            itemView.setOnClickListener(v -> clickListener.onItemClick(v, getAdapterPosition()));
+            itemView.setOnClickListener(new ThrottleClickListener() {
+                @Override
+                void onSingleClick(View v) {
+                    clickListener.onItemClick(v, getAdapterPosition());
+                }
+            });
 
             mFileImage = itemView.findViewById(R.id.item_file_image);
             mFileTitle = itemView.findViewById(R.id.item_file_title);

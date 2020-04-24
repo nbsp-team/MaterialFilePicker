@@ -25,7 +25,7 @@ public class FileUtils {
     }
 
     @Nullable
-    public static File getParentIfExists(File file) {
+    public static File getParentOrNull(File file) {
         if (file.getParent() == null) {
             return null;
         }

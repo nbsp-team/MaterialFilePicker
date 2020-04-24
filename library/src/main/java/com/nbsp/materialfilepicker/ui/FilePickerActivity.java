@@ -59,7 +59,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         initArguments(savedInstanceState);
         initViews();
         initToolbar();
-        initBackStackState();
+
+        if (savedInstanceState == null) {
+            initBackStackState();
+        }
     }
 
     private void initArguments(Bundle savedInstanceState) {

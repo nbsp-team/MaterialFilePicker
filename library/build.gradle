@@ -1,27 +1,24 @@
-apply plugin: 'com.android.library'
+plugins {
+    id "com.github.dcendents.android-maven"
+    id "com.android.library"
+}
+
+group = 'com.nbsp'
+version = '1.9'
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'library'
+    mavProjectName = 'Material File Picker'
 
-    publishedGroupId = 'com.nbsp'
-    libraryName = 'Material File Picker'
-    artifact = 'library'
+    mavSiteUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
+    mavGitUrl = mavSiteUrl + '.git'
 
-    libraryDescription = 'File picker library in material design'
+    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
 
-    siteUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
-    gitUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
-
-    libraryVersion = '1.8'
-
-    developerId = 'lukaville'
-    developerName = 'Nickolay Chameev'
-    developerEmail = 'lukaville@gmail.com'
-
-    licenseName = 'GNU GENERAL PUBLIC LICENSE Version 2'
-    licenseUrl = 'https://raw.githubusercontent.com/nbsp-team/MaterialFilePicker/master/LICENSE'
-    allLicenses = ["GNU-GPL-2.0"]
+    // Change to true to publish and then ./gradlew publish
+    mavPublishToRemoteRepo = false
+    mavRemoteRepoUser = ''
+    mavRemoteRepoPassword = ''
+    mavRepoRemoteUrl = 'http://dl.bintray.com/lukaville/maven'
 }
 
 android {
@@ -52,3 +49,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
 }
+
+apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'

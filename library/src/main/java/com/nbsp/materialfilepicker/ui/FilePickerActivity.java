@@ -149,7 +149,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
                 break;
             }
 
-            current = FileUtils.getParentIfExists(current);
+            current = FileUtils.getParentOrNull(current);
         }
 
         Collections.reverse(path);
@@ -205,7 +205,7 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
-            mCurrent = FileUtils.getParentIfExists(mCurrent);
+            mCurrent = FileUtils.getParentOrNull(mCurrent);
             updateTitle();
         } else {
             setResult(RESULT_CANCELED);

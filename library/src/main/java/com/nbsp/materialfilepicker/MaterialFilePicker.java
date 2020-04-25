@@ -10,6 +10,7 @@ import com.nbsp.materialfilepicker.filter.HiddenFilter;
 import com.nbsp.materialfilepicker.filter.PatternFilter;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -212,11 +213,10 @@ public class MaterialFilePicker {
         intent.putExtra(FilePickerActivity.ARG_CLOSEABLE, mCloseable);
 
         if (mRootPath != null) {
-            intent.putExtra(FilePickerActivity.ARG_START_PATH, mRootPath);
+            intent.putExtra(FilePickerActivity.ARG_START_FILE, new File(mRootPath));
         }
-
         if (mCurrentPath != null) {
-            intent.putExtra(FilePickerActivity.ARG_CURRENT_PATH, mCurrentPath);
+            intent.putExtra(FilePickerActivity.ARG_CURRENT_FILE, new File(mCurrentPath));
         }
 
         if (mTitle != null) {

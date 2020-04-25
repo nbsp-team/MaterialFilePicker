@@ -22,21 +22,27 @@ dependencies {
 Open file picker:
 
 ```java
-new MaterialFilePicker()
+MaterialFilePicker()
+    // Pass a source of context. Can be:
+    //    .withActivity(Activity activity)
+    //    .withFragment(Fragment fragment)
+    //    .withSupportFragment(androidx.fragment.app.Fragment fragment)
     .withActivity(this)
-    .withRequestCode(1)
-    .withFilter(Pattern.compile(".*\\.txt$")) // Filtering files and directories by file name using regexp
-    .withFilterDirectories(true) // Set directories filterable (false by default)
-    .withHiddenFiles(true) // Show hidden files and folders
-    .start();
-```
-or
-```java
-Intent intent = new Intent(this, FilePickerActivity.class);
-intent.putExtra(FilePickerActivity.ARG_FILE_FILTER, Pattern.compile(".*\\.txt$"));
-intent.putExtra(FilePickerActivity.ARG_DIRECTORIES_FILTER, true);
-intent.putExtra(FilePickerActivity.ARG_SHOW_HIDDEN, true);
-startActivityForResult(intent, 1);
+    // With cross icon on the right side of toolbar for closing picker straight away
+    .withCloseMenu(true)
+    // Entry point path (user will start from it)
+    .withPath(alarmsFolder.absolutePath)
+    // Root path (user won't be able to come higher than it)
+    .withRootPath(externalStorage.absolutePath)
+    // Showing hidden files
+    .withHiddenFiles(true)
+    // Want to choose only jpg images
+    .withFilter(Pattern.compile(".*\\.(jpg|jpeg)$"))
+    // Don't apply filter to directories names
+    .withFilterDirectories(false)
+    .withTitle("Sample title")
+    .withRequestCode(FILE_PICKER_REQUEST_CODE)
+    .start()
 ```
 
 Override on activity result:

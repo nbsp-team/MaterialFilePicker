@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.nbsp.materialfilepicker.MaterialFilePicker
@@ -34,15 +32,15 @@ class SampleFragment : Fragment() {
     }
 
     private fun checkPermissionsAndOpenFilePicker() {
-        val permissionGranted = checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED
+        val permissionGranted = checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PERMISSION_GRANTED
 
         if (permissionGranted) {
             openFilePicker()
         } else {
-            if (shouldShowRequestPermissionRationale(requireActivity(), READ_EXTERNAL_STORAGE)) {
+            if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE)) {
                 showError()
             } else {
-                requestPermissions(requireActivity(), arrayOf(READ_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE)
+                requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), PERMISSIONS_REQUEST_CODE)
             }
         }
     }

@@ -27,22 +27,24 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class FilePickerActivity extends AppCompatActivity implements DirectoryFragment.FileClickListener {
-    public static final String ARG_START_PATH = "arg_start_path";
-    public static final String ARG_CURRENT_PATH = "arg_current_path";
+    public static final String ARG_START_FILE = "arg_start_path";
+    public static final String ARG_CURRENT_FILE = "arg_current_path";
 
     public static final String ARG_FILTER = "arg_filter";
     public static final String ARG_CLOSEABLE = "arg_closeable";
     public static final String ARG_TITLE = "arg_title";
 
-    public static final String STATE_START_PATH = "state_start_path";
-    private static final String STATE_CURRENT_PATH = "state_current_path";
+    public static final String STATE_START_FILE = "state_start_path";
+    private static final String STATE_CURRENT_FILE = "state_current_path";
 
     public static final String RESULT_FILE_PATH = "result_file_path";
     private static final int HANDLE_CLICK_DELAY = 150;
 
     private Toolbar mToolbar;
-    private String mStartPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-    private String mCurrentPath = mStartPath;
+
+    private File mStart = Environment.getExternalStorageDirectory();
+    private File mCurrent = mStart;
+
     private CharSequence mTitle;
 
     private Boolean mCloseable = true;
@@ -57,8 +59,10 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         initArguments(savedInstanceState);
         initViews();
         initToolbar();
-        initBackStackState();
-        initFragment();
+
+        if (savedInstanceState == null) {
+            initBackStackState();
+        }
     }
 
     private void initArguments(Bundle savedInstanceState) {
@@ -73,20 +77,20 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         }
 
         if (savedInstanceState != null) {
-            mStartPath = savedInstanceState.getString(STATE_START_PATH);
-            mCurrentPath = savedInstanceState.getString(STATE_CURRENT_PATH);
+            mStart = (File) savedInstanceState.getSerializable(STATE_START_FILE);
+            mCurrent = (File) savedInstanceState.getSerializable(STATE_CURRENT_FILE);
             updateTitle();
         } else {
-            if (getIntent().hasExtra(ARG_START_PATH)) {
-                mStartPath = getIntent().getStringExtra(ARG_START_PATH);
-                mCurrentPath = mStartPath;
+            if (getIntent().hasExtra(ARG_START_FILE)) {
+                mStart = (File) getIntent().getSerializableExtra(ARG_START_FILE);
+                mCurrent = mStart;
             }
 
-            if (getIntent().hasExtra(ARG_CURRENT_PATH)) {
-                String currentPath = getIntent().getStringExtra(ARG_CURRENT_PATH);
+            if (getIntent().hasExtra(ARG_CURRENT_FILE)) {
+                File currentFile = (File) getIntent().getSerializableExtra(ARG_CURRENT_FILE);
 
-                if (currentPath.startsWith(mStartPath)) {
-                    mCurrentPath = currentPath;
+                if (FileUtils.isParent(currentFile, mStart)) {
+                    mCurrent = currentFile;
                 }
             }
         }
@@ -133,32 +137,31 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         mToolbar = findViewById(R.id.toolbar);
     }
 
-    private void initFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(mCurrentPath, mFilter))
-                .addToBackStack(null)
-                .commit();
-    }
-
     private void initBackStackState() {
-        final List<String> separatedPaths = new ArrayList<>();
-        String pathToAdd = mCurrentPath;
+        final List<File> path = new ArrayList<>();
 
-        while (!pathToAdd.equals(mStartPath)) {
-            pathToAdd = FileUtils.cutLastSegmentOfPath(pathToAdd);
-            separatedPaths.add(pathToAdd);
+        File current = mCurrent;
+
+        while (current != null) {
+            path.add(current);
+
+            if (current.equals(mStart)) {
+                break;
+            }
+
+            current = FileUtils.getParentOrNull(current);
         }
 
-        Collections.reverse(separatedPaths);
+        Collections.reverse(path);
 
-        for (String path : separatedPaths) {
-            addFragmentToBackStack(path);
+        for (File file : path) {
+            addFragmentToBackStack(file);
         }
     }
 
     private void updateTitle() {
         if (getSupportActionBar() != null) {
-            String titlePath = mCurrentPath.isEmpty() ? "/" : mCurrentPath;
+            final String titlePath = mCurrent.getAbsolutePath();
             if (TextUtils.isEmpty(mTitle)) {
                 getSupportActionBar().setTitle(titlePath);
             } else {
@@ -167,10 +170,16 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
         }
     }
 
-    private void addFragmentToBackStack(String path) {
+    private void addFragmentToBackStack(File file) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, DirectoryFragment.getInstance(path, mFilter))
+                .replace(
+                        R.id.container,
+                        DirectoryFragment.getInstance(
+                                file,
+                                mFilter
+                        )
+                )
                 .addToBackStack(null)
                 .commit();
     }
@@ -194,9 +203,9 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     @Override
     public void onBackPressed() {
-        if (!mCurrentPath.equals(mStartPath)) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
-            mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
+            mCurrent = FileUtils.getParentOrNull(mCurrent);
             updateTitle();
         } else {
             setResult(RESULT_CANCELED);
@@ -207,8 +216,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(STATE_CURRENT_PATH, mCurrentPath);
-        outState.putString(STATE_START_PATH, mStartPath);
+        outState.putSerializable(STATE_CURRENT_FILE, mCurrent);
+        outState.putSerializable(STATE_START_FILE, mStart);
     }
 
     @Override
@@ -217,24 +226,28 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     }
 
     private void handleFileClicked(final File clickedFile) {
+        if (isFinishing()) {
+            return;
+        }
+
         if (clickedFile.isDirectory()) {
-            mCurrentPath = clickedFile.getPath();
+            mCurrent = clickedFile;
             // If the user wanna go to the emulated directory, he will be taken to the
             // corresponding user emulated folder.
-            if (mCurrentPath.equals("/storage/emulated")) {
-                mCurrentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            if (mCurrent.getAbsolutePath().equals("/storage/emulated")) {
+                mCurrent = Environment.getExternalStorageDirectory();
             }
-            addFragmentToBackStack(mCurrentPath);
+            addFragmentToBackStack(mCurrent);
             updateTitle();
         } else {
-            setResultAndFinish(clickedFile.getPath());
+            setResultAndFinish(clickedFile);
         }
     }
 
-    private void setResultAndFinish(String filePath) {
+    private void setResultAndFinish(File file) {
         Intent data = new Intent();
 
-        data.putExtra(RESULT_FILE_PATH, filePath);
+        data.putExtra(RESULT_FILE_PATH, file.getPath());
         setResult(RESULT_OK, data);
 
         finish();

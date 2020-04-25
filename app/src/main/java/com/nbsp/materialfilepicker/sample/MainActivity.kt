@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import com.nbsp.materialfilepicker.MaterialFilePicker
 import com.nbsp.materialfilepicker.ui.FilePickerActivity
 import java.io.File
+import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity() {
 
@@ -71,6 +72,10 @@ class MainActivity : AppCompatActivity() {
         val alarmsFolder = File(externalStorage, ALARMS_EXTERNAL_STORAGE_FOLDER);
 
         MaterialFilePicker()
+                // Pass a source of context. Can be:
+                //    .withActivity(Activity activity)
+                //    .withFragment(Fragment fragment)
+                //    .withSupportFragment(androidx.fragment.app.Fragment fragment)
                 .withActivity(this)
                 // With cross icon on the right side of toolbar for closing picker straight away
                 .withCloseMenu(true)
@@ -80,6 +85,10 @@ class MainActivity : AppCompatActivity() {
                 .withRootPath(externalStorage.absolutePath)
                 // Showing hidden files
                 .withHiddenFiles(true)
+                // Want to choose only jpg images
+                .withFilter(Pattern.compile(".*\\.(jpg|jpeg)$"))
+                // Don't apply filter to directories names
+                .withFilterDirectories(false)
                 .withTitle("Sample title")
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
                 .start()

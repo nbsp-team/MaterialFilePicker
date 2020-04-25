@@ -3,16 +3,16 @@ package com.nbsp.materialfilepicker.ui;
 import android.os.SystemClock;
 import android.view.View;
 
-abstract class ThrottleClickListener implements View.OnClickListener {
+abstract class ThrottleClickListener implements OnItemClickListener {
 
     private static final long MIN_CLICK_INTERVAL = 600;
 
     private long mLastClickTime;
 
-    abstract void onSingleClick(View v);
+    abstract void onItemClickThrottled(View view, int position);
 
     @Override
-    public final void onClick(View v) {
+    public void onItemClick(View view, int position) {
         final long currentClickTime = SystemClock.uptimeMillis();
         final long elapsedTime = currentClickTime - mLastClickTime;
 
@@ -22,6 +22,6 @@ abstract class ThrottleClickListener implements View.OnClickListener {
             return;
         }
 
-        onSingleClick(v);
+        onItemClickThrottled(view, position);
     }
 }

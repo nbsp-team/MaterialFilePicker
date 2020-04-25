@@ -81,9 +81,12 @@ public class DirectoryFragment extends Fragment {
     private void initFilesList() {
         mDirectoryAdapter = new DirectoryAdapter(FileUtils.getFileList(mFile, mFilter));
 
-        mDirectoryAdapter.setOnItemClickListener((view, position) -> {
-            if (mFileClickListener != null) {
-                mFileClickListener.onFileClicked(mDirectoryAdapter.getModel(position));
+        mDirectoryAdapter.setOnItemClickListener(new ThrottleClickListener() {
+            @Override
+            void onItemClickThrottled(View view, int position) {
+                if (mFileClickListener != null) {
+                    mFileClickListener.onFileClicked(mDirectoryAdapter.getModel(position));
+                }
             }
         });
 

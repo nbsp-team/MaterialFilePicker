@@ -1,23 +1,69 @@
 plugins {
     id "com.android.library"
+    id 'com.jfrog.bintray' version '1.8.5'
+    id 'maven-publish'
 }
 
 group = 'com.nbsp'
 version = '1.9'
 
-ext {
-    mavProjectName = 'Material File Picker'
+// Use ./gradlew bintrayUpload to upload
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
 
-    mavSiteUrl = 'https://github.com/nbsp-team/MaterialFilePicker'
-    mavGitUrl = mavSiteUrl + '.git'
+    publications = ['release']
 
-    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    pkg {
+        repo = 'maven'
+        name = 'library'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/nbsp-team/MaterialFilePicker.git'
 
-    // Change to true to publish and then ./gradlew publish
-    mavPublishToRemoteRepo = false
-    mavRemoteRepoUser = ''
-    mavRemoteRepoPassword = ''
-    mavRepoRemoteUrl = 'http://dl.bintray.com/lukaville/maven'
+        version {
+            name = version
+        }
+    }
+}
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+
+    scm {
+        url 'https://github.com/nbsp-team/MaterialFilePicker'
+    }
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                artifact sourceJar
+                groupId group
+                artifactId 'library'
+                version version
+                pom.withXml {
+                    def root = asNode()
+                    root.appendNode('description', 'Simple and fast material file picker')
+                    root.appendNode('name', 'MaterialFilePicker')
+                    root.appendNode('url', 'https://github.com/nbsp-team/MaterialFilePicker')
+                    root.children().last() + pomConfig
+                }
+            }
+        }
+    }
 }
 
 android {
@@ -48,5 +94,3 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
 }
-
-apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'

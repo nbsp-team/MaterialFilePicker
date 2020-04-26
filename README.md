@@ -1,4 +1,4 @@
-# Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690) 
+# Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690)
 Material file picker library for Android
 
 ![](https://i.imgur.com/mjxs05n.png)
@@ -9,9 +9,7 @@ Add repository url and dependency in application module gradle file:
 
 ```gradle
 repositories {
-    maven {
-        url  "http://dl.bintray.com/lukaville/maven" 
-    }
+    jcenter()
 }
 
 dependencies {

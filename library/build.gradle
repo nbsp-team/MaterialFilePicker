@@ -16,7 +16,7 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = 'library'
+        name = 'materialfilepicker'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/nbsp-team/MaterialFilePicker.git'
 
@@ -25,13 +25,13 @@ bintray {
         }
     }
 }
-// Create the pom configuration:
+
 def pomConfig = {
     licenses {
         license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            distribution 'repo'
         }
     }
 
@@ -52,7 +52,7 @@ afterEvaluate {
                 from components.release
                 artifact sourceJar
                 groupId group
-                artifactId 'library'
+                artifactId 'materialfilepicker'
                 version version
                 pom.withXml {
                     def root = asNode()

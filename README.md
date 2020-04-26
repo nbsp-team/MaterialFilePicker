@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.nbsp:library:1.9'
+    implementation 'com.nbsp:materialfilepicker:1.9'
 }
 ```
 

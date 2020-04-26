@@ -21,7 +21,7 @@ bintray {
         vcsUrl = 'https://github.com/nbsp-team/MaterialFilePicker.git'
 
         version {
-            name = version
+            name = project.version
         }
     }
 }

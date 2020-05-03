@@ -1,8 +1,7 @@
-# Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690)
+# Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690) [![Download](https://api.bintray.com/packages/lukaville/maven/materialfilepicker/images/download.svg?version=1.9.1) ](https://bintray.com/lukaville/maven/materialfilepicker/1.9.1/link)
 Material file picker library for Android
 
 ![](https://i.imgur.com/mjxs05n.png)
-[![Download](https://api.bintray.com/packages/lukaville/maven/materialfilepicker/images/download.svg?version=1.9.1) ](https://bintray.com/lukaville/maven/materialfilepicker/1.9.1/link)
 
 ## Using
 

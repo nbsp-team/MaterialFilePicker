@@ -2,6 +2,7 @@
 Material file picker library for Android
 
 ![](https://i.imgur.com/mjxs05n.png)
+[![Download](https://api.bintray.com/packages/lukaville/maven/materialfilepicker/images/download.svg?version=1.9.1) ](https://bintray.com/lukaville/maven/materialfilepicker/1.9.1/link)
 
 ## Using
 
@@ -13,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.nbsp:materialfilepicker:1.9'
+    implementation 'com.nbsp:materialfilepicker:1.9.1'
 }
 ```
 

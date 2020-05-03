@@ -182,21 +182,8 @@ public class MaterialFilePicker {
         }
     }
 
-    private CompositeFilter getFilter() {
-        final List<FileFilter> filters = new ArrayList<>();
-
-        if (!mShowHidden) {
-            filters.add(new HiddenFilter());
-        }
-
-        if (mFileFilter != null) {
-            filters.add(new PatternFilter(mFileFilter, mDirectoriesFilter));
-        }
-
-        return new CompositeFilter(filters);
-    }
-
-    private Intent getIntent() {
+    // Public because of https://github.com/nbsp-team/MaterialFilePicker/issues/113
+    public Intent getIntent() {
         CompositeFilter filter = getFilter();
 
         Activity activity = null;
@@ -224,5 +211,19 @@ public class MaterialFilePicker {
         }
 
         return intent;
+    }
+
+    private CompositeFilter getFilter() {
+        final List<FileFilter> filters = new ArrayList<>();
+
+        if (!mShowHidden) {
+            filters.add(new HiddenFilter());
+        }
+
+        if (mFileFilter != null) {
+            filters.add(new PatternFilter(mFileFilter, mDirectoriesFilter));
+        }
+
+        return new CompositeFilter(filters);
     }
 }

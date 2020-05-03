@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.nbsp'
-version = '1.9'
+version = '1.9.1'
 
 // Use ./gradlew bintrayUpload to upload
 bintray {

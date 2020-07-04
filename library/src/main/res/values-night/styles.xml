@@ -15,8 +15,8 @@
         <item name="colorControlHighlight">@color/color_control_highlight</item>
     </style>
 
-    <style name="MaterialFileTheme.AppBar" parent="Theme.MaterialComponents.Light" />
+    <style name="MaterialFileTheme.AppBar" parent="Theme.MaterialComponents" />
 
-    <style name="MaterialFileTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents" />
+    <style name="MaterialFileTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
 
 </resources>

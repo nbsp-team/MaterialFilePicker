@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.nbsp.materialfilepicker.R;
 import com.nbsp.materialfilepicker.filter.FileFilter;
@@ -35,15 +36,15 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     public static final String ARG_TITLE = "arg_title";
 
     public static final String STATE_START_FILE = "state_start_path";
-    private static final String STATE_CURRENT_FILE = "state_current_path";
-
     public static final String RESULT_FILE_PATH = "result_file_path";
+    private static final String STATE_CURRENT_FILE = "state_current_path";
     private static final int HANDLE_CLICK_DELAY = 150;
 
     private Toolbar mToolbar;
 
-    private File mStart = Environment.getExternalStorageDirectory();
-    private File mCurrent = mStart;
+    //private File mStart = Environment.getExternalStorageDirectory();
+    private File mStart = null;
+    private File mCurrent = null;
 
     private CharSequence mTitle;
 
@@ -55,6 +56,18 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_picker);
+
+        if (mStart == null) {
+            String mStorage = ContextCompat.getExternalFilesDirs(getApplicationContext(), null)[0].getPath();
+
+            if (mStorage.contains("/Android/data")) {
+                int index = mStorage.indexOf("/Android/data");
+                mStorage = mStorage.substring(0, index);
+            }
+
+            mStart = new File(mStorage);
+            mCurrent = mStart;
+        }
 
         initArguments(savedInstanceState);
         initViews();
@@ -107,11 +120,6 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     private void initToolbar() {
         setSupportActionBar(mToolbar);
 
-        // Show back button
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Truncate start of path
         try {
             Field f;
@@ -161,7 +169,16 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
 
     private void updateTitle() {
         if (getSupportActionBar() != null) {
-            final String titlePath = mCurrent.getAbsolutePath();
+            //final String titlePath = mCurrent.getAbsolutePath();
+            // Show only path name
+            final String titlePath = mCurrent.getName();
+
+            if (mCurrent.getPath().equals(mStart.getPath())) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            } else {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+
             if (TextUtils.isEmpty(mTitle)) {
                 getSupportActionBar().setTitle(titlePath);
             } else {

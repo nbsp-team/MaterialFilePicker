@@ -34,18 +34,6 @@ public class DirectoryFragment extends Fragment {
     private DirectoryAdapter mDirectoryAdapter;
     private FileClickListener mFileClickListener;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mFileClickListener = (FileClickListener) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mFileClickListener = null;
-    }
-
     static DirectoryFragment getInstance(
             File file,
             FileFilter filter
@@ -58,6 +46,18 @@ public class DirectoryFragment extends Fragment {
         instance.setArguments(args);
 
         return instance;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mFileClickListener = (FileClickListener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mFileClickListener = null;
     }
 
     @Nullable

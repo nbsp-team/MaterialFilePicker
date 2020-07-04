@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nbsp.materialfilepicker">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <application>
-
-        <activity android:name=".ui.FilePickerActivity"
-            android:theme="@style/MFP_BaseTheme">
-        </activity>
+    <application android:requestLegacyExternalStorage="true">
+        <activity
+            android:name=".ui.FilePickerActivity"
+            android:theme="@style/MaterialFileTheme"></activity>
     </application>
 </manifest>

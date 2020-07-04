@@ -56,7 +56,8 @@ public class FilePickerActivity extends AppCompatActivity implements DirectoryFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_picker);
-
+        
+        //  deepcode ignore JavaSameEvalBinaryExpressiontrue: <Validation within the life cycle of the activity.>
         if (mStart == null) {
             String mStorage = ContextCompat.getExternalFilesDirs(getApplicationContext(), null)[0].getPath();
 

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_primary">#FFFFFFFF</color>
-    <color name="color_primary_dark">#FFFFFFFF</color>
-    <color name="color_background">#FFFFFFFF</color>
-    <color name="text_color_primary">#212121</color>
-    <color name="color_control_highlight">#4000695C</color>
-    <color name="color_primary_dark_variant">#8a000000</color>
+    <!-- App Colors -->
+    <color name="colorPrimary">?colorPrimary</color>
+    <color name="colorPrimaryDark">?colorPrimaryDark</color>
+    <color name="colorAccent">?colorAccent</color>
+    <color name="colorBackground">?android:colorBackground</color>
+
+    <!-- Default Colors -->
+    <color name="textColorPrimary">#212121</color>
+    <color name="colorControlHighlight">#4000695C</color>
+
+    <!-- (API 21 Status Bar Color) (API 23 Navigation Bar Color)-->
+    <color name="colorPrimaryDarkVariant">#8a000000</color>
 
     <color name="empty_directory_hint">#c7c7c7</color>
 

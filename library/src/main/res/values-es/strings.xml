@@ -3,7 +3,6 @@
     <string name="type_certificate">Certificado</string>
     <string name="action_close">Cerrar</string>
     <string name="type_archive">Archivo</string>
-    <string name="type_apk">APK</string>
     <string name="empty_directory_hint">Carpeta vacía</string>
     <string name="type_directory">Carpeta</string>
     <string name="type_document">Archivo</string>

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_primary">#212121</color>
-    <color name="color_primary_dark">#212121</color>
-    <color name="color_background">#212121</color>
-    <color name="text_color_primary">#FFFFFFFF</color>
-    <color name="color_control_highlight">#33ffffff</color>
-    <color name="color_primary_dark_variant">#8a000000</color>
+    <!-- Default Colors -->
+    <color name="textColorPrimary">#FFFFFFFF</color>
+    <color name="colorControlHighlight">#33ffffff</color>
 
     <color name="empty_directory_hint">#c7c7c7</color>
 

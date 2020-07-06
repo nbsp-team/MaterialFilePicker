@@ -2,13 +2,13 @@
 
     <style name="MaterialFileTheme" parent="MaterialFileTheme.Base">
         <!-- StatusBarColor -->
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
         <!-- Status Bar Icons Light Active -->
         <item name="android:windowLightStatusBar">false</item>
 
         <!-- NavigationBarColor -->
-        <item name="android:navigationBarColor">@color/color_primary_dark</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 
         <!-- NavigationBar Icons Light Active -->
         <item name="android:windowLightNavigationBar">false</item>

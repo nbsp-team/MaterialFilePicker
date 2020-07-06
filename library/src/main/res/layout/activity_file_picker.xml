@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:elevation="@dimen/appbar_elevation"
         android:fitsSystemWindows="true"
-        android:theme="@style/MaterialFileTheme.AppBar">
+        android:theme="@style/MaterialFileTheme.AppBar"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"

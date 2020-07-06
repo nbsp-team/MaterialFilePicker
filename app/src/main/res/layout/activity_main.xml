@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/pick_from_activity"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/id_appbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pick_from_activity" />
+        android:elevation="@dimen/appbar_elevation"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBar">
 
-    <fragment
-        android:id="@+id/sample_fragment"
-        class="com.nbsp.materialfilepicker.sample.SampleFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.Toolbar"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <Button
+            android:id="@+id/pick_from_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_from_activity"
+            android:theme="@style/ButtonStyle" />
+
+        <fragment
+            android:id="@+id/sample_fragment"
+            class="com.nbsp.materialfilepicker.sample.SampleFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </LinearLayout>

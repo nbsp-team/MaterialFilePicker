@@ -6,6 +6,6 @@
     <application android:requestLegacyExternalStorage="true">
         <activity
             android:name=".ui.FilePickerActivity"
-            android:theme="@style/MaterialFileTheme"></activity>
+            android:theme="@style/MaterialFileTheme" />
     </application>
 </manifest>

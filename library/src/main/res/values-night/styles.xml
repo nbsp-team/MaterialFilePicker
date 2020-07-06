@@ -3,19 +3,21 @@
     <style name="MaterialFileTheme" parent="MaterialFileTheme.Base" />
 
     <style name="MaterialFileTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="android:windowBackground">@color/color_background</item>
-        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:textColor">@color/text_color_primary</item>
-        <item name="android:textColorPrimary">@color/text_color_primary</item>
-        <item name="android:textColorSecondary">@color/text_color_primary</item>
-        <item name="actionMenuTextColor">@color/text_color_primary</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
 
-        <item name="colorControlHighlight">@color/color_control_highlight</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="actionMenuTextColor">@color/textColorPrimary</item>
+
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
     </style>
 
-    <style name="MaterialFileTheme.AppBar" parent="Theme.MaterialComponents" />
+    <style name="MaterialFileTheme.AppBar" parent="@style/ThemeOverlay.MaterialComponents" />
 
     <style name="MaterialFileTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
 

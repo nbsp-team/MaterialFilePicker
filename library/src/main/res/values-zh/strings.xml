@@ -13,6 +13,5 @@
     <string name="type_pdf">PDF</string>
     <string name="type_power_point">PPT</string>
     <string name="type_word">WORD</string>
-    <string name="type_apk">APK</string>
     <string name="type_video">视频</string>
 </resources>

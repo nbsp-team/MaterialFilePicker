@@ -54,6 +54,7 @@ public class FileTypeUtils {
         COMPRESS(R.drawable.ic_app_compress, R.string.type_archive, "cab", "7z", "alz", "arj", "bzip2", "bz2", "dmg", "gzip", "gz", "jar", "lz", "lzip", "lzma", "zip", "rar", "tar", "tgz"),
         WORD(R.drawable.ic_app_document, R.string.type_word, "doc", "docm", "docx", "dot", "mcw", "rtf", "pages", "odt", "ott"),
         DRAWING(R.drawable.ic_app_drawing, R.string.type_drawing, "ai", "cdr", "dfx", "eps", "svg", "stl", "wmf", "emf", "art", "xar"),
+        JSON(R.drawable.ic_app_json, R.string.type_json, "json"),
         IMAGE(R.drawable.ic_app_image, R.string.type_image, "bmp", "gif", "ico", "jpeg", "jpg", "pcx", "png", "psd", "tga", "tiff", "tif", "xcf"),
         MUSIC(R.drawable.ic_app_music, R.string.type_music, "aiff", "aif", "wav", "flac", "m4a", "wma", "amr", "mp2", "mp3", "wma", "aac", "mid", "m3u"),
         PDF(R.drawable.ic_app_pdf, R.string.type_pdf, "pdf"),

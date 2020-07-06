@@ -18,8 +18,8 @@
     </style>
 
     <!-- Toolbar  -->
-    <style name="AppTheme.AppBar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
+    <style name="AppTheme.AppBar" parent="@style/ThemeOverlay.MaterialComponents" />
 
-    <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents" />
+    <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
 
 </resources>

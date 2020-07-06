@@ -2,13 +2,13 @@
 
     <style name="MaterialFileTheme" parent="MaterialFileTheme.Base">
         <!-- StatusBarColor -->
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
 
         <!-- Status Bar Icons Light Active -->
         <item name="android:windowLightStatusBar">false</item>
 
         <!-- NavigationBarColor -->
-        <item name="android:navigationBarColor">@color/color_primary_dark_variant</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDarkVariant</item>
 
         <!-- Flag indicating whether this Window is responsible for drawing the background -->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

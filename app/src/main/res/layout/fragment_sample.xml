@@ -6,5 +6,7 @@
         android:id="@+id/pick_from_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pick_from_fragment" />
+        android:text="@string/pick_from_fragment"
+        android:theme="@style/ButtonStyle" />
+
 </FrameLayout>

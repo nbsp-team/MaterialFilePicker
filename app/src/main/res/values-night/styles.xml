@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkVariant</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="ButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
+
+    <!-- Toolbar  -->
+    <style name="AppTheme.AppBar" parent="@style/ThemeOverlay.MaterialComponents" />
+
+    <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
+
+</resources>

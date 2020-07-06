@@ -1,21 +1,19 @@
-# Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690) [![Download](https://api.bintray.com/packages/lukaville/maven/materialfilepicker/images/download.svg?version=1.9.1) ](https://bintray.com/lukaville/maven/materialfilepicker/1.9.1/link)
-Material file picker library for Android
+# Material File Picker Unofficial
+Material file picker library for Android by Arte al Programar
 
-![](https://i.imgur.com/mjxs05n.png)
+![](ss/main.png)
+
+## What's new
+- Require Android Jelly Bean 4.1.x (API 16+)
+- Android 10 Compatibility
+- Material Components for Android Support
+- Night Mode Support
+- New Icon Designs 
+
 
 ## Using
 
-Add repository url and dependency in application module gradle file:
-
-```gradle
-repositories {
-    jcenter()
-}
-
-dependencies {
-    implementation 'com.nbsp:materialfilepicker:1.9.1'
-}
-```
+Download library and add it to your project
 
 Open file picker:
 
@@ -62,7 +60,3 @@ Runtime permissions:
 You should handle runtime permissions in activity, from what you called Material File Picker.
 Look [here](https://github.com/nbsp-team/MaterialFilePicker/blob/master/app/src/main/java/com/dimorinny/sample/MainActivity.java#L38-L69) for example code.
 
-## Third Party Bindings
-
-### React Native
-You may now use this library with [React Native](https://github.com/facebook/react-native) via the module [here](https://github.com/prscX/react-native-file-selector)

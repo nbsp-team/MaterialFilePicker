@@ -1,91 +1,29 @@
-plugins {
-    id "com.android.library"
-    id 'com.jfrog.bintray' version '1.8.5'
-    id 'maven-publish'
-}
-
-group = 'com.nbsp'
-version = '2.0'
-
-// Use ./gradlew bintrayUpload to upload
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-
-    publications = ['release']
-
-    pkg {
-        repo = 'maven'
-        name = 'materialfilepicker'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/nbsp-team/MaterialFilePicker.git'
-
-        version {
-            name = project.version
-        }
-    }
-}
-
-def pomConfig = {
-    licenses {
-        license {
-            name 'The Apache Software License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution 'repo'
-        }
-    }
-
-    scm {
-        url 'https://github.com/nbsp-team/MaterialFilePicker'
-    }
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier 'sources'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                artifact sourceJar
-                groupId group
-                artifactId 'materialfilepicker'
-                version version
-                pom.withXml {
-                    def root = asNode()
-                    root.appendNode('description', 'Simple and fast material file picker')
-                    root.appendNode('name', 'MaterialFilePicker')
-                    root.appendNode('url', 'https://github.com/nbsp-team/MaterialFilePicker')
-                    root.children().last() + pomConfig
-                }
-            }
-        }
-    }
-}
-
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 14
         versionName "1.4"
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

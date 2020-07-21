@@ -107,6 +107,26 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
+## Themes
+
+To create a compatible (Light/Dark) theme, you can change the following colors to suit your theme.
+
+```
+    <!-- App Colors -->
+    <color name="colorPrimary">?colorPrimary</color>
+    <color name="colorPrimaryDark">?colorPrimaryDark</color>
+    <color name="colorAccent">?colorAccent</color>
+    <color name="colorBackground">?android:colorBackground</color>
+
+    <!-- Default Colors -->
+    <color name="textColorPrimary">#212121</color>
+    <color name="colorControlHighlight">#4000695C</color>
+
+    <!-- (API 21 Status Bar Color) (API 23 Navigation Bar Color)-->
+    <color name="colorPrimaryDarkVariant">#8a000000</color>
+
+```
+
 Runtime permissions:
 
 You should handle runtime permissions in activity, from what you called Material File Picker.

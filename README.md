@@ -11,13 +11,63 @@ Material file picker library for Android by Arte al Programar
 - New Icon Designs 
 
 
-## Using
+## Add your project
 
 Download library and add it to your project
 
-Open file picker:
+or use `JitPack.io`
 
-```java
+```
+build.gradle (Project)
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+
+build.gradle (Module: app)
+
+dependencies {
+    ...
+    implementation 'com.github.arteaprogramar:MaterialFilePicker:version'
+}
+
+
+```
+
+## Using (IMPORTANT)
+
+- Add to Values
+
+```
+colors.xml
+<resources>
+    ...
+    <color name="colorBackground">#fafafa</color>
+    ...
+</resources>
+
+styles.xml
+
+<resources>
+
+    ...
+    <item name="android:colorBackground">@color/colorBackground</item>
+    ...
+</resources>
+
+```
+
+- Open your class and add the following code
+
+```
+...
+public static final int FILE_PICKER_REQUEST_CODE = 989
+...
+
 MaterialFilePicker()
     // Pass a source of context. Can be:
     //    .withActivity(Activity activity)
@@ -39,6 +89,8 @@ MaterialFilePicker()
     .withTitle("Sample title")
     .withRequestCode(FILE_PICKER_REQUEST_CODE)
     .start()
+...
+
 ```
 
 Override on activity result:
@@ -48,7 +100,7 @@ Override on activity result:
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (requestCode == 1 && resultCode == RESULT_OK) {
+    if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
         String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
         // Do anything with file
     }

@@ -32,7 +32,7 @@ build.gradle (Module: app)
 
 dependencies {
     ...
-    implementation 'com.github.arteaprogramar:MaterialFilePicker:version'
+    implementation 'com.github.arteaprogramar:Android_MaterialFilePicker:version'
 }
 
 

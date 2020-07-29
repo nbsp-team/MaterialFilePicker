@@ -1,15 +1,24 @@
 <resources>
 
-    <style name="MFP_BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="MaterialFileTheme" parent="MaterialFileTheme.Base" />
+
+    <style name="MaterialFileTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="mfp_toolbar_theme">@style/MFP_BaseToolbarTheme</item>
+
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="actionMenuTextColor">@color/textColorPrimary</item>
+
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
     </style>
 
-    <style name="MFP_BaseToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="colorControlNormal">#FFFFFF</item>
-    </style>
+    <style name="MaterialFileTheme.AppBar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="MaterialFileTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents" />
 
 </resources>

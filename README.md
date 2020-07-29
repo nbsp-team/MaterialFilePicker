@@ -1,25 +1,73 @@
-# Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690) [![Download](https://api.bintray.com/packages/lukaville/maven/materialfilepicker/images/download.svg?version=1.9.1) ](https://bintray.com/lukaville/maven/materialfilepicker/1.9.1/link)
-Material file picker library for Android
+# Material File Picker Unofficial
+Material file picker library for Android by Arte al Programar
 
-![](https://i.imgur.com/mjxs05n.png)
+![](ss/main.png)
 
-## Using
+## What's new
+- Require Android Jelly Bean 4.1.x (API 16+)
+- Android 10 Compatibility
+- Material Components for Android Support
+- Night Mode Support
+- New Icon Designs 
 
-Add repository url and dependency in application module gradle file:
 
-```gradle
-repositories {
-    jcenter()
+## Add your project
+
+Download library and add it to your project
+
+or use `JitPack.io`
+
+```
+build.gradle (Project)
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
 }
+
+
+build.gradle (Module: app)
 
 dependencies {
-    implementation 'com.nbsp:materialfilepicker:1.9.1'
+    ...
+    implementation 'com.github.arteaprogramar:Android_MaterialFilePicker:version'
 }
+
+
 ```
 
-Open file picker:
+## Using (IMPORTANT)
 
-```java
+- Add to Values
+
+```
+colors.xml
+<resources>
+    ...
+    <color name="colorBackground">#fafafa</color>
+    ...
+</resources>
+
+styles.xml
+
+<resources>
+
+    ...
+    <item name="android:colorBackground">@color/colorBackground</item>
+    ...
+</resources>
+
+```
+
+- Open your class and add the following code
+
+```
+...
+public static final int FILE_PICKER_REQUEST_CODE = 989
+...
+
 MaterialFilePicker()
     // Pass a source of context. Can be:
     //    .withActivity(Activity activity)
@@ -41,6 +89,8 @@ MaterialFilePicker()
     .withTitle("Sample title")
     .withRequestCode(FILE_PICKER_REQUEST_CODE)
     .start()
+...
+
 ```
 
 Override on activity result:
@@ -50,11 +100,31 @@ Override on activity result:
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (requestCode == 1 && resultCode == RESULT_OK) {
+    if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
         String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
         // Do anything with file
     }
 }
+```
+
+## Themes
+
+To create a compatible (Light/Dark) theme, you can change the following colors to suit your theme.
+
+```
+    <!-- App Colors -->
+    <color name="colorPrimary">?colorPrimary</color>
+    <color name="colorPrimaryDark">?colorPrimaryDark</color>
+    <color name="colorAccent">?colorAccent</color>
+    <color name="colorBackground">?android:colorBackground</color>
+
+    <!-- Default Colors -->
+    <color name="textColorPrimary">#212121</color>
+    <color name="colorControlHighlight">#4000695C</color>
+
+    <!-- (API 21 Status Bar Color) (API 23 Navigation Bar Color)-->
+    <color name="colorPrimaryDarkVariant">#8a000000</color>
+
 ```
 
 Runtime permissions:
@@ -62,7 +132,3 @@ Runtime permissions:
 You should handle runtime permissions in activity, from what you called Material File Picker.
 Look [here](https://github.com/nbsp-team/MaterialFilePicker/blob/master/app/src/main/java/com/dimorinny/sample/MainActivity.java#L38-L69) for example code.
 
-## Third Party Bindings
-
-### React Native
-You may now use this library with [React Native](https://github.com/facebook/react-native) via the module [here](https://github.com/prscX/react-native-file-selector)

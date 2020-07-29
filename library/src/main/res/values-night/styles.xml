@@ -1,0 +1,24 @@
+<resources>
+
+    <style name="MaterialFileTheme" parent="MaterialFileTheme.Base" />
+
+    <style name="MaterialFileTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorPrimary</item>
+        <item name="actionMenuTextColor">@color/textColorPrimary</item>
+
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+    </style>
+
+    <style name="MaterialFileTheme.AppBar" parent="@style/ThemeOverlay.MaterialComponents" />
+
+    <style name="MaterialFileTheme.Toolbar" parent="@style/ThemeOverlay.MaterialComponents.Light" />
+
+</resources>

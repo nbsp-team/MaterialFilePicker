@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main Colors-->
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#1B5E20</color>
+    <color name="colorBackground">#212121</color>
+
+    <!-- Text Colors -->
+    <color name="textColorPrimary">#FFFFFFFF</color>
+    <color name="colorControlHighlight">#33ffffff</color>
+
+</resources>

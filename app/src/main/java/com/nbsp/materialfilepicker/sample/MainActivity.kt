@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFilePicker() {
         val externalStorage = Environment.getExternalStorageDirectory()
-        val alarmsFolder = File(externalStorage, ALARMS_EXTERNAL_STORAGE_FOLDER);
+        val alarmsFolder = File(externalStorage, ALARMS_EXTERNAL_STORAGE_FOLDER)
 
         MaterialFilePicker()
                 // Pass a source of context. Can be:

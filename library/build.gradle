@@ -1,86 +1,25 @@
-plugins {
-    id "com.android.library"
-    id 'com.jfrog.bintray' version '1.8.5'
-    id 'maven-publish'
-}
-
-group = 'com.nbsp'
-version = '1.9.1'
-
-// Use ./gradlew bintrayUpload to upload
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-
-    publications = ['release']
-
-    pkg {
-        repo = 'maven'
-        name = 'materialfilepicker'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/nbsp-team/MaterialFilePicker.git'
-
-        version {
-            name = project.version
-        }
-    }
-}
-
-def pomConfig = {
-    licenses {
-        license {
-            name 'The Apache Software License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution 'repo'
-        }
-    }
-
-    scm {
-        url 'https://github.com/nbsp-team/MaterialFilePicker'
-    }
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                artifact sourceJar
-                groupId group
-                artifactId 'materialfilepicker'
-                version version
-                pom.withXml {
-                    def root = asNode()
-                    root.appendNode('description', 'Simple and fast material file picker')
-                    root.appendNode('name', 'MaterialFilePicker')
-                    root.appendNode('url', 'https://github.com/nbsp-team/MaterialFilePicker')
-                    root.children().last() + pomConfig
-                }
-            }
-        }
-    }
-}
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 13
-        versionName "1.3"
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     compileOptions {
@@ -90,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.3.0'
 }
